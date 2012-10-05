@@ -16,8 +16,7 @@ describe Nrtflrx::Request do
     end
 
     it 'instantiates the resource_path with great' do
-      request            = Nrtflrx::Request.new('great')
-      resource_path_ivar = request.instance_variable_get(:@resource_path)
+      resource_path_ivar = @request.instance_variable_get(:@resource_path)
 
       resource_path_ivar.must_equal 'great'
     end
@@ -25,7 +24,6 @@ describe Nrtflrx::Request do
 
   describe '#resource_path' do
     it 'is an attr_reader' do
-      request = Nrtflrx::Request.new('clown sauce')
       resource_path = @request.resource_path
 
       resource_path.must_equal 'clown sauce'
