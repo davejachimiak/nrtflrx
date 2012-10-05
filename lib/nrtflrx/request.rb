@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Nrtflrx
   class Request
     attr_reader :resource_path
@@ -7,6 +9,7 @@ module Nrtflrx
     end
 
     def execute
+      Net::HTTP.get_response(uri)
     end
   end
 end
