@@ -29,7 +29,7 @@ module Nrtflrx
     def params
       request_params = Nrtflrx::Request::Params.new
 
-      request_params.get
+      request_params.as_hash
     end
   end
 end

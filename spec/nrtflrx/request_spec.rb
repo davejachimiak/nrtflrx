@@ -62,9 +62,9 @@ describe Nrtflrx::Request do
   end
 
   describe '#params' do
-    it 'calls Nrtflrx::Request::Params.new.get' do
+    it 'calls Nrtflrx::Request::Params.new.as_hash' do
       params = Nrtflrx::Request::Params.new
-      params.expects(:get)
+      params.expects(:as_hash)
       Nrtflrx::Request::Params.expects(:new).returns params
 
       @request.params

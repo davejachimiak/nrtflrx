@@ -8,14 +8,14 @@ describe Nrtflrx::Request::Params do
     @params = Nrtflrx::Request::Params.new
   end
 
-  describe '#get' do
+  describe '#as_hash' do
     it 'returns a hash of the other methods names in this class and their values' do
       params_class = Nrtflrx::Request::Params
       params_class.stubs(:public_methods).with(false).returns [:daemon, :father, :get]
       params_class.any_instance.stubs(:daemon).returns 'omen'
       params_class.any_instance.stubs(:father).returns 'Robert'
 
-      get = @params.get
+      get = @params.as_hash
 
       get[:daemon].must_equal 'omen'
       get[:father].must_equal 'Robert'

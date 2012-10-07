@@ -7,7 +7,7 @@ module Nrtflrx
       OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1'
       OAUTH_VERSION          = '1.0'
 
-      def get
+      def as_hash
         params_methods = self.public_methods false
         param_names    = params_methods.reject { |method| method == __method__ }
 
