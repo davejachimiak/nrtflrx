@@ -1,11 +1,17 @@
+require_relative '../../nrtflrx'
+
 module Nrtflrx
   class Request
     class Params
       def get
-        public_methods = self.public_methods false
-        param_names    = public_methods.reject { |method| method == __method__ }
+        params_methods = self.public_methods false
+        param_names    = params_methods.reject { |method| method == __method__ }
 
         Hash[params_with_values(param_names)]
+      end
+
+      def oauth_consumer_key
+        Nrtflrx.consumer_key
       end
 
     private

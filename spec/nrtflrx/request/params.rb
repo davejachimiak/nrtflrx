@@ -14,7 +14,19 @@ describe Nrtflrx::Request::Params do
       params = Nrtflrx::Request::Params.new
       get    = params.get
 
-      get.must_equal({ daemon: 'omen', father: 'Robert' })
+      get[:daemon].must_equal 'omen'
+      get[:father].must_equal 'Robert'
+    end
+  end
+
+  describe '#oauth_consumer_key' do
+    it 'returns the key from the top-level module method' do
+      Nrtflrx.stubs(:consumer_key).returns 'bobo'
+
+      params = Nrtflrx::Request::Params.new
+      oauth_consumer_key = params.oauth_consumer_key
+
+      oauth_consumer_key.must_equal 'bobo'
     end
   end
 end
