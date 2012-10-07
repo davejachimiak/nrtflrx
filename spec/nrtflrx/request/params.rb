@@ -71,4 +71,12 @@ describe Nrtflrx::Request::Params do
       end
     end
   end
+
+  describe '#oauth_version' do
+    it 'returns "1.0"' do
+      oauth_version = @params.oauth_version
+
+      oauth_version.must_equal '1.0'
+    end
+  end
 end
