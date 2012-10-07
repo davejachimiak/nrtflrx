@@ -11,5 +11,12 @@ module Nrtflrx
     def execute
       Net::HTTP.get_response(uri)
     end
+
+    def uri
+      request_uri       = URI("#{base_url}/#{resource_path}")
+      request_uri.query = URI.encode_www_form(params)
+
+      request_uri
+    end
   end
 end
