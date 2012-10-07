@@ -49,4 +49,26 @@ describe Nrtflrx::Request::Params do
       oauth_signature_method.must_equal 'HMAC-SHA1'
     end
   end
+
+  describe '#oauth_timestamp' do
+    describe 'returns the number of seconds between the new years 1970 and now' do
+      it 'if now is new years of 2001' do
+        ny_2001 = Time.mktime(2001)
+        Time.stubs(:now).returns ny_2001
+
+        oauth_timestamp = @params.oauth_timestamp
+
+        oauth_timestamp.must_equal '978325200'
+      end
+
+      it 'if now is new years of 2002' do
+        ny_2002 = Time.mktime(2002)
+        Time.stubs(:now).returns ny_2002
+
+        oauth_timestamp = @params.oauth_timestamp
+
+        oauth_timestamp.must_equal '1009861200'
+      end
+    end
+  end
 end

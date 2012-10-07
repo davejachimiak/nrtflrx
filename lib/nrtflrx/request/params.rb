@@ -25,6 +25,10 @@ module Nrtflrx
         SIGNATURE_METHOD
       end
 
+      def oauth_timestamp
+        Time.now.utc.to_i.to_s
+      end
+
     private
       def params_with_values(param_names)
         param_names.map do |param_name|
