@@ -41,4 +41,12 @@ describe Nrtflrx::Request::Params do
       oauth_nonce.must_be :<=, 1000000000
     end
   end
+
+  describe '#oauth_signature_method' do
+    it 'returns "HMAC-SHA1"' do
+      oauth_signature_method = @params.oauth_signature_method
+
+      oauth_signature_method.must_equal 'HMAC-SHA1'
+    end
+  end
 end

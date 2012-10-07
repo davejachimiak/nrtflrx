@@ -4,6 +4,7 @@ module Nrtflrx
   class Request
     class Params
       NONCE_UPPER_LIMIT = 1000000000
+      SIGNATURE_METHOD  = 'HMAC-SHA1'
 
       def get
         params_methods = self.public_methods false
@@ -18,6 +19,10 @@ module Nrtflrx
 
       def oauth_nonce
         rand(NONCE_UPPER_LIMIT)
+      end
+
+      def oauth_signature_method
+        SIGNATURE_METHOD
       end
 
     private
