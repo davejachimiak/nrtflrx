@@ -4,6 +4,10 @@ require 'minitest/autorun'
 require 'mocha'
 
 describe Nrtflrx::Request::Params do
+  before do
+    @params = Nrtflrx::Request::Params.new
+  end
+
   describe '#get' do
     it 'returns a hash of the other methods names in this class and their values' do
       params_class = Nrtflrx::Request::Params
@@ -11,8 +15,7 @@ describe Nrtflrx::Request::Params do
       params_class.any_instance.stubs(:daemon).returns 'omen'
       params_class.any_instance.stubs(:father).returns 'Robert'
 
-      params = Nrtflrx::Request::Params.new
-      get    = params.get
+      get = @params.get
 
       get[:daemon].must_equal 'omen'
       get[:father].must_equal 'Robert'
@@ -23,10 +26,18 @@ describe Nrtflrx::Request::Params do
     it 'returns the key from the top-level module method' do
       Nrtflrx.stubs(:consumer_key).returns 'bobo'
 
-      params = Nrtflrx::Request::Params.new
-      oauth_consumer_key = params.oauth_consumer_key
+      oauth_consumer_key = @params.oauth_consumer_key
 
       oauth_consumer_key.must_equal 'bobo'
+    end
+  end
+
+  describe '#oauth_nonce' do
+    it 'returns a random number between 1 and 1 billion' do
+      oauth_nonce = @params.oauth_nonce
+
+      oauth_nonce.must_be :>=, 1
+      oauth_nonce.must_be :<=, 1000000000
     end
   end
 end

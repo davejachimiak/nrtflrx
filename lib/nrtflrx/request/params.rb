@@ -3,6 +3,8 @@ require_relative '../../nrtflrx'
 module Nrtflrx
   class Request
     class Params
+      NONCE_UPPER_LIMIT = 1000000000
+
       def get
         params_methods = self.public_methods false
         param_names    = params_methods.reject { |method| method == __method__ }
@@ -12,6 +14,10 @@ module Nrtflrx
 
       def oauth_consumer_key
         Nrtflrx.consumer_key
+      end
+
+      def oauth_nonce
+        rand(NONCE_UPPER_LIMIT)
       end
 
     private
