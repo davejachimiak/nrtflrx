@@ -52,4 +52,22 @@ describe Nrtflrx::Request do
       uri.query.must_equal 'param1=PARAM1&param2=PARAM2'
     end
   end
+
+  describe '#base_url' do
+    it 'returns the base url' do
+      base_url = @request.base_url
+
+      base_url.must_equal 'http://api-public.netflix.com'
+    end
+  end
+
+  describe '#params' do
+    it 'calls Nrtflrx::Request::Params.new.get' do
+      params = Nrtflrx::Request::Params.new
+      params.expects(:get)
+      Nrtflrx::Request::Params.expects(:new).returns params
+
+      @request.params
+    end
+  end
 end
