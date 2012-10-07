@@ -19,6 +19,7 @@ describe Nrtflrx::Request::Params do
 
       get[:daemon].must_equal 'omen'
       get[:father].must_equal 'Robert'
+      get[:get].must_be_nil
     end
   end
 
