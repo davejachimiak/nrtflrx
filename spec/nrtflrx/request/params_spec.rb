@@ -89,7 +89,13 @@ describe Nrtflrx::Request::Params do
 
   describe '#oauth_signature' do
     it 'calls sign on a signature object' do
-      skip 'TODO: pass request object to params'
+      signature = Nrtflrx::Request::Params::Signature.
+        new('request object', @params)
+      signature.expects(:sign)
+      Nrtflrx::Request::Params::Signature.expects(:new).
+        with('request object', @params).returns signature
+
+      @params.oauth_signature
     end
   end
 end

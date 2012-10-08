@@ -39,6 +39,12 @@ module Nrtflrx
         OAUTH_VERSION
       end
 
+      def oauth_signature
+        signature = Nrtflrx::Request::Params::Signature.new(@request, self)
+
+        signature.sign
+      end
+
     private
       def params_with_values(param_names)
         param_names.map do |param_name|
