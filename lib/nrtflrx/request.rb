@@ -27,7 +27,7 @@ module Nrtflrx
     end
 
     def params
-      request_params = Nrtflrx::Request::Params.new
+      request_params = Nrtflrx::Request::Params.new(self)
 
       request_params.as_hash
     end

@@ -1,4 +1,5 @@
 require_relative '../../nrtflrx'
+require_relative '../../nrtflrx/request/params/signature'
 
 module Nrtflrx
   class Request
@@ -6,6 +7,10 @@ module Nrtflrx
       NONCE_UPPER_LIMIT      = 1000000000
       OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1'
       OAUTH_VERSION          = '1.0'
+
+      def initialize(request)
+        @request = request
+      end
 
       def as_hash
         params_methods = self.public_methods false

@@ -5,7 +5,14 @@ require 'mocha'
 
 describe Nrtflrx::Request::Params do
   before do
-    @params = Nrtflrx::Request::Params.new
+    @params = Nrtflrx::Request::Params.new('request object')
+  end
+
+  describe 'initialize' do
+    it 'set @request to the request passed in' do
+      request_ivar = @params.instance_variable_get(:@request)
+      request_ivar.must_equal 'request object'
+    end
   end
 
   describe '#as_hash' do
@@ -77,6 +84,12 @@ describe Nrtflrx::Request::Params do
       oauth_version = @params.oauth_version
 
       oauth_version.must_equal '1.0'
+    end
+  end
+
+  describe '#oauth_signature' do
+    it 'calls sign on a signature object' do
+      skip 'TODO: pass request object to params'
     end
   end
 end
