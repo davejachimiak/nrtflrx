@@ -2,6 +2,8 @@ module Nrtflrx
   class Request
     class Params
       class Signature
+        attr_reader :request
+
         def initialize(request, params)
           @request = request
           @params  = params

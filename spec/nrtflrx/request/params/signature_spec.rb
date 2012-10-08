@@ -8,7 +8,8 @@ require 'base64'
 
 describe Nrtflrx::Request::Params::Signature do
   before do
-    @signature = Nrtflrx::Request::Params::Signature.new('please', 'parums')
+    @request_mock = mock
+    @signature = Nrtflrx::Request::Params::Signature.new(@request_mock, 'parums')
   end
 
   describe 'initialize' do
@@ -16,7 +17,7 @@ describe Nrtflrx::Request::Params::Signature do
       it 'one way' do
         request_ivar = @signature.instance_variable_get :@request
 
-        request_ivar.must_equal 'please'
+        request_ivar.must_equal @request_mock
       end
 
       it 'another way' do
@@ -40,6 +41,14 @@ describe Nrtflrx::Request::Params::Signature do
 
         params_ivar.must_equal 'parooms'
       end
+    end
+  end
+
+  describe '#request' do
+    it 'returns the request ivar' do
+      request = @signature.request
+
+      request.must_equal @request_mock
     end
   end
 
