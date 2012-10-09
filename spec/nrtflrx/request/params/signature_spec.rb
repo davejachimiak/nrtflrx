@@ -44,10 +44,18 @@ describe Nrtflrx::Request::Params::Signature do
   end
 
   describe '#params' do
-    it 'returns the request ivar' do
+    it 'returns the params ivar' do
       params = @signature.params
 
       params.must_equal @params_mock
+    end
+  end
+
+  describe '#request' do
+    it 'returns the request ivar' do
+      request = @signature.request
+
+      request.must_equal 'please'
     end
   end
 
@@ -69,6 +77,24 @@ describe Nrtflrx::Request::Params::Signature do
       signed_signature = signature.sign
 
       signed_signature.must_equal 'encoded+signature%3D'
+    end
+  end
+
+  describe '#base_string' do
+    it 'joins percent encoded http verb, base url with resource path, and params ' +
+      'sans oauth_signature with &' do
+      request = Nrtflrx::Request.new('resource_path')
+      params  = Nrtflrx::Request::Params.new(request)
+      #params.stubs(:a).returns 'fun'
+      #params.stubs(:b).returns 'cool'
+      #params.stubs(:c).returns 'nice'
+      #Nrtflrx::Request::Params.stubs(:new).with(request).returns params
+
+      signature = Nrtflrx::Request::Params::Signature.new(request, params)
+
+      base_string = signature.base_string
+
+      base_string.must_equal 'GET&base_url%2Fresource_path&a%3Dfun%26b%3Dcool%26c%3Dnice'
     end
   end
 end

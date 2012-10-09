@@ -1,10 +1,11 @@
 require 'cgi'
+require 'base64'
 
 module Nrtflrx
   class Request
     class Params
       class Signature
-        attr_reader :params
+        attr_reader :request, :params
 
         def initialize(request, params)
           @request = request
@@ -20,6 +21,10 @@ module Nrtflrx
           chomped_encoded_signature = encoded_signature.chomp
 
           CGI.escape(chomped_encoded_signature)
+        end
+
+        def base_string
+          "GET&#{CGI.escape(request.base_url)}"
         end
       end
     end
