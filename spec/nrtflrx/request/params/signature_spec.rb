@@ -7,31 +7,30 @@ require 'base64'
 
 describe Nrtflrx::Request::Params::Signature do
   before do
-    @params_mock = mock
-    @signature   = Nrtflrx::Request::Params::Signature.new('please', @params_mock)
+    @signature = Nrtflrx::Request::Params::Signature.new('base path', { cool: 'too cool'})
   end
 
   describe 'initialize' do
-    describe 'initializes the request object' do
+    describe 'initializes the base path' do
       it 'one way' do
-        request_ivar = @signature.instance_variable_get :@request
+        base_path_ivar = @signature.instance_variable_get :@base_path
 
-        request_ivar.must_equal 'please'
+        base_path_ivar.must_equal 'base path'
       end
 
       it 'another way' do
-        signature = Nrtflrx::Request::Params::Signature.new('pretty please', 'parums')
-        request_ivar = signature.instance_variable_get :@request
+        signature = Nrtflrx::Request::Params::Signature.new('pretty please', {})
+        base_path = signature.instance_variable_get :@base_path
 
-        request_ivar.must_equal 'pretty please'
+        base_path.must_equal 'pretty please'
       end
     end
 
-    describe 'initializes the params object' do
+    describe 'initializes the params hash' do
       it 'one way' do
-        request_ivar = @signature.instance_variable_get :@params
+        params_ivar = @signature.instance_variable_get :@params
 
-        request_ivar.must_equal @params_mock
+        params_ivar.must_equal({ cool: 'too cool' })
       end
 
       it 'another way' do
@@ -43,19 +42,19 @@ describe Nrtflrx::Request::Params::Signature do
     end
   end
 
+  describe '#request' do
+    it 'returns the request ivar' do
+      base_path = @signature.base_path
+
+      base_path.must_equal 'base path'
+    end
+  end
+
   describe '#params' do
     it 'returns the params ivar' do
       params = @signature.params
 
-      params.must_equal @params_mock
-    end
-  end
-
-  describe '#request' do
-    it 'returns the request ivar' do
-      request = @signature.request
-
-      request.must_equal 'please'
+      params.must_equal({ cool: 'too cool' })
     end
   end
 
@@ -63,11 +62,7 @@ describe Nrtflrx::Request::Params::Signature do
     it 'uses a SHA1 object to sign base string with consumer key, encodes ' +
       'the signature with Base64, chomps the encoding, and escapes the ' +
       'signature with CGI' do
-      params = Nrtflrx::Request::Params.new('request')
-      params.stubs(:oauth_consumer_key).returns 'consumer key'
-      Nrtflrx::Request::Params.stubs(:new).with('request').returns params
-
-      signature = Nrtflrx::Request::Params::Signature.new('request', params)
+      signature = Nrtflrx::Request::Params::Signature.new('base path', { oauth_consumer_key: 'consumer key' })
       signature.stubs(:base_string).returns 'base string'
       OpenSSL::Digest::SHA1.stubs(:new).returns 'the digest'
       OpenSSL::HMAC.stubs(:digest).with('the digest', 'consumer key', 'base string').
@@ -83,18 +78,13 @@ describe Nrtflrx::Request::Params::Signature do
   describe '#base_string' do
     it 'joins percent encoded http verb, base url with resource path, and params ' +
       'sans oauth_signature with &' do
-      request = Nrtflrx::Request.new('resource_path')
-      params  = Nrtflrx::Request::Params.new(request)
-      #params.stubs(:a).returns 'fun'
-      #params.stubs(:b).returns 'cool'
-      #params.stubs(:c).returns 'nice'
-      #Nrtflrx::Request::Params.stubs(:new).with(request).returns params
+      params = { oauth_consumer_key: 'noon*#?',
+                 oauth_banche:       'which' }
 
-      signature = Nrtflrx::Request::Params::Signature.new(request, params)
-
+      signature = Nrtflrx::Request::Params::Signature.new('base_url/resource_path', params)
       base_string = signature.base_string
 
-      base_string.must_equal 'GET&base_url%2Fresource_path&a%3Dfun%26b%3Dcool%26c%3Dnice'
+      base_string.must_equal 'GET&base_url%2Fresource_path&oauth_consumer_key%3Dnoon%2A%23%3F%26oauth_banche%3Dwhich'
     end
   end
 end

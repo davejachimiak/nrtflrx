@@ -16,18 +16,18 @@ module Nrtflrx
     end
 
     def uri
-      request_uri       = URI("#{base_url}/#{resource_path}")
+      request_uri       = URI("#{base_path}")
       request_uri.query = URI.encode_www_form(params)
 
       request_uri
     end
 
-    def base_url
-      BASE_URL
+    def base_path
+      "#{BASE_URL}/#{resource_path}"
     end
 
     def params
-      request_params = Nrtflrx::Request::Params.new(self)
+      request_params = Nrtflrx::Request::Params.new(base_path)
 
       request_params.as_hash
     end

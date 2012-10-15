@@ -42,8 +42,7 @@ describe Nrtflrx::Request do
 
   describe '#uri' do
     it 'is a url string wrapped in a uri object' do
-      @request.stubs(:base_url).returns 'base_url'
-      @request.stubs(:resource_path).returns 'resource_path'
+      @request.stubs(:base_path).returns 'base_url/resource_path'
       @request.stubs(:params).returns({ param1: 'PARAM1', param2: 'PARAM2' })
 
       uri = @request.uri
@@ -53,19 +52,19 @@ describe Nrtflrx::Request do
     end
   end
 
-  describe '#base_url' do
-    it 'returns the base url' do
-      base_url = @request.base_url
+  describe '#base_path' do
+    it 'returns the base path' do
+      base_path = @request.base_path
 
-      base_url.must_equal 'http://api-public.netflix.com'
+      base_path.must_equal 'http://api-public.netflix.com/clown_sauce'
     end
   end
 
   describe '#params' do
     it 'calls Nrtflrx::Request::Params.new.as_hash' do
-      params = Nrtflrx::Request::Params.new(@request)
+      params = Nrtflrx::Request::Params.new(@request.base_path)
       params.expects(:as_hash)
-      Nrtflrx::Request::Params.expects(:new).with(@request).returns params
+      Nrtflrx::Request::Params.expects(:new).with(@request.base_path).returns params
 
       @request.params
     end

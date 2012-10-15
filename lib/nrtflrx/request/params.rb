@@ -8,52 +8,69 @@ module Nrtflrx
       OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1'
       OAUTH_VERSION          = '1.0'
 
-      def initialize(request)
-        @request = request
+      def initialize(base_path)
+        @base_path = base_path
       end
 
       def as_hash
-        params_methods = self.public_methods false
-        param_names    = params_methods.reject { |method| method == __method__ }
+        params_methods = public_methods(false)
+        param_types    = params_methods.reject { |method| method == __method__ }
 
-        Hash[params_with_values(param_names)]
+        Hash[param_types_with_values(param_types)]
       end
 
       def oauth_consumer_key
-        Nrtflrx.consumer_key
+        @oauth_consumer_key = Nrtflrx.consumer_key
       end
 
       def oauth_nonce
-        rand(NONCE_UPPER_LIMIT)
+        @oauth_nonce ||= rand(NONCE_UPPER_LIMIT)
       end
 
       def oauth_signature_method
-        OAUTH_SIGNATURE_METHOD
+        @oauth_signature_method = OAUTH_SIGNATURE_METHOD
       end
 
       def oauth_timestamp
-        Time.now.utc.to_i.to_s
+        @oauth_timestamp ||= Time.now.utc.to_i.to_s
       end
 
       def oauth_version
-        OAUTH_VERSION
+        @oauth_version = OAUTH_VERSION
       end
 
       def oauth_signature
-        signature = Nrtflrx::Request::Params::Signature.new(@request, self)
+        hash_for_signature = Hash[params_with_values_for_signature]
+        signature          = Nrtflrx::Request::Params::Signature.new(@base_path, hash_for_signature)
 
         signature.sign
       end
 
     private
-      def params_with_values(param_names)
-        param_names.map do |param_name|
-          [param_name, param_value(param_name)]
+      def param_types_with_values(param_types)
+        param_types.map do |param_type|
+          [param_type, param_value(param_type)]
         end
       end
 
-      def param_value(param_name)
-        self.send(param_name)
+      def param_value(param_type)
+        send(param_type)
+      end
+
+      def params_with_values_for_signature
+        ivars_sans_base_path.map do |ivar|
+          [sanitize_ivar(ivar), instance_variable_get(ivar)]
+        end
+      end
+
+      def ivars_sans_base_path
+        instance_variables.reject do |ivar|
+          ivar == :@base_path
+        end
+      end
+
+      def sanitize_ivar(ivar)
+        ivar.to_s.gsub('@', '').to_sym
       end
     end
   end

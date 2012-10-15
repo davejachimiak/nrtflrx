@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ansi (1.4.3)
     builder (3.0.3)
     cucumber (1.2.1)
       builder (>= 2.1.2)
@@ -11,13 +12,18 @@ GEM
     gherkin (2.11.2)
       json (>= 1.4.6)
     json (1.7.5)
+    minitest (4.1.0)
     mocha (0.9.8)
       rake
     rake (0.9.2.2)
+    turn (0.9.6)
+      ansi
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   cucumber
+  minitest
   mocha
+  turn
