@@ -32,7 +32,7 @@ module Nrtflrx
       end
 
       def oauth_timestamp
-        @oauth_timestamp ||= Time.now.utc.to_i.to_s
+        @oauth_timestamp ||= Time.now.to_i.to_s
       end
 
       def oauth_version
