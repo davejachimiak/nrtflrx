@@ -84,7 +84,7 @@ describe Nrtflrx::Request::Params::Signature do
       signature = Nrtflrx::Request::Params::Signature.new('base_url/resource_path', params)
       base_string = signature.base_string
 
-      base_string.must_equal 'GET&base_url%2Fresource_path&oauth_consumer_key%3Dnoon%2A%23%3F%26oauth_banche%3Dwhich'
+      base_string.must_equal 'GET&base_url%2Fresource_path&oauth_banche%3Dwhich%26oauth_consumer_key%3Dnoon%2A%23%3F'
     end
   end
 end

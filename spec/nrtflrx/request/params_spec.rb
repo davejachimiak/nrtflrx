@@ -18,6 +18,7 @@ describe Nrtflrx::Request::Params do
 
   describe '#as_hash' do
     it 'returns a hash of the other methods names in this class and their values' do
+      Nrtflrx.stubs(:consumer_key).returns 'purple'
       params_class = Nrtflrx::Request::Params
       params_class.stubs(:public_methods).with(false).returns [:daemon, :father]
       params_class.any_instance.stubs(:daemon).returns 'omen'

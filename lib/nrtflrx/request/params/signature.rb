@@ -31,7 +31,9 @@ module Nrtflrx
         end
 
         def params_string
-          params.map { |type, value| "#{type.to_s}=#{value}" }.join('&')
+          ordered_params = params.sort
+
+          ordered_params.map { |type, value| "#{type.to_s}=#{value}" }.join('&')
         end
 
         def percent_encode(string)
