@@ -46,7 +46,8 @@ module Nrtflrx
         signature.sign
       end
 
-    private
+      private
+
       def param_types_with_values(param_types)
         param_types.map do |param_type|
           [param_type, param_value(param_type)]

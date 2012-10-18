@@ -20,7 +20,8 @@ module Nrtflrx
           "GET&#{percent_encode(base_path)}&#{percent_encode(params_string)}"
         end
 
-      private
+        private
+
         def chomped_encoded_signature
           sha1               = OpenSSL::Digest::SHA1.new
           oauth_consumer_key = params[:oauth_consumer_key]
