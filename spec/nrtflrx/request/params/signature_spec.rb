@@ -66,7 +66,7 @@ describe Nrtflrx::Request::Params::Signature do
       signature.stubs(:base_string).returns 'base string'
       Nrtflrx.stubs(:shared_secret).returns 'shared secret'
       OpenSSL::Digest::SHA1.stubs(:new).returns 'the digest'
-      OpenSSL::HMAC.stubs(:digest).with('the digest', 'shared secret', 'base string').
+      OpenSSL::HMAC.stubs(:digest).with('the digest', 'shared secret&', 'base string').
         returns 'raw signature'
       Base64.stubs(:encode64).with('raw signature').returns "encoded signature=\n"
 

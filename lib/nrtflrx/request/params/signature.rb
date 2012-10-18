@@ -26,10 +26,10 @@ module Nrtflrx
         private
 
         def chomped_encoded_signature
-          sha1               = OpenSSL::Digest::SHA1.new
-          shared_secret      = Nrtflrx.shared_secret
-          raw_signature      = OpenSSL::HMAC.digest(sha1, shared_secret, base_string)
-          encoded_signature  = Base64.encode64(raw_signature)
+          feather           = OpenSSL::Digest::SHA1.new
+          ink               = "#{Nrtflrx.shared_secret}&"
+          raw_signature     = OpenSSL::HMAC.digest(feather, ink, base_string)
+          encoded_signature = Base64.encode64(raw_signature)
 
           encoded_signature.chomp
         end

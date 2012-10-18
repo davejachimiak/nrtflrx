@@ -12,7 +12,7 @@ module Nrtflrx
     end
 
     def execute
-      Net::HTTP.get_response(uri)
+      Net::HTTP.get(uri)
     end
 
     def uri
