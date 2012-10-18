@@ -17,7 +17,10 @@ module Nrtflrx
         end
 
         def base_string
-          "GET&#{percent_encode(base_path)}&#{percent_encode(params_string)}"
+          encoded_base_path     = percent_encode(base_path)
+          encoded_params_string = percent_encode(params_string)
+
+          "GET&#{encoded_base_path}&#{encoded_params_string}"
         end
 
         private
