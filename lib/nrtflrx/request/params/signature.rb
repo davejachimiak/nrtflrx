@@ -27,8 +27,8 @@ module Nrtflrx
 
         def chomped_encoded_signature
           sha1               = OpenSSL::Digest::SHA1.new
-          oauth_consumer_key = params[:oauth_consumer_key]
-          raw_signature      = OpenSSL::HMAC.digest(sha1, oauth_consumer_key, base_string)
+          shared_secret      = Nrtflrx.shared_secret
+          raw_signature      = OpenSSL::HMAC.digest(sha1, shared_secret, base_string)
           encoded_signature  = Base64.encode64(raw_signature)
 
           encoded_signature.chomp

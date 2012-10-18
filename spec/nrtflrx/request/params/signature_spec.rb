@@ -64,8 +64,9 @@ describe Nrtflrx::Request::Params::Signature do
       'signature with CGI' do
       signature = Nrtflrx::Request::Params::Signature.new('base path', { oauth_consumer_key: 'consumer key' })
       signature.stubs(:base_string).returns 'base string'
+      Nrtflrx.stubs(:shared_secret).returns 'shared secret'
       OpenSSL::Digest::SHA1.stubs(:new).returns 'the digest'
-      OpenSSL::HMAC.stubs(:digest).with('the digest', 'consumer key', 'base string').
+      OpenSSL::HMAC.stubs(:digest).with('the digest', 'shared secret', 'base string').
         returns 'raw signature'
       Base64.stubs(:encode64).with('raw signature').returns "encoded signature=\n"
 

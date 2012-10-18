@@ -5,6 +5,10 @@ task :test do
 end
 
 namespace :test do
+  task :nrtflrx do
+    system 'turn spec/nrtflrx_spec.rb'
+  end
+
   task :catalog do
     system 'turn spec/nrtflrx/catalog_spec.rb'
   end
