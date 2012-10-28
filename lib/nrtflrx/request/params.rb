@@ -22,7 +22,8 @@ module Nrtflrx
       end
 
       def oauth_signature
-        signature = Nrtflrx::Request::Params::Signature.new(@base_path, as_hash_sans_signature)
+        signature = Nrtflrx::Request::Params::Signature.
+          new(@base_path, as_hash_sans_signature)
 
         signature.sign
       end

@@ -72,7 +72,7 @@ describe Nrtflrx::Request::Params::Signature do
 
       signed_signature = signature.sign
 
-      signed_signature.must_equal 'encoded+signature%3D'
+      signed_signature.must_equal 'encoded+signature='
     end
   end
 
