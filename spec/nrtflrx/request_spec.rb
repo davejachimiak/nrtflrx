@@ -43,12 +43,12 @@ describe Nrtflrx::Request do
   describe '#uri' do
     it 'is a url string wrapped in a uri object' do
       @request.stubs(:base_path).returns 'base_url/resource_path'
-      @request.stubs(:params).returns({ param1: 'PARAM1', param2: 'PARAM2' })
+      @request.stubs(:params).returns({ param1: 'PARAM1', param2: 'PARAM2%' })
 
       uri = @request.uri
 
       uri.path.must_equal 'base_url/resource_path'
-      uri.query.must_equal 'param1=PARAM1&param2=PARAM2'
+      uri.query.must_equal 'param1=PARAM1&param2=PARAM2%'
     end
   end
 
