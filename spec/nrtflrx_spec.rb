@@ -1,7 +1,6 @@
 require_relative '../lib/nrtflrx'
 require_relative 'spec_helper'
 
-
 describe Nrtflrx do
   describe '#consumer_key' do
     it 'is an attr_accessor' do
