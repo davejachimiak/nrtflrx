@@ -1,9 +1,5 @@
 require_relative '../../../../lib/nrtflrx/request/params/signature'
-
-require 'minitest/autorun'
-require 'mocha'
-require 'openssl'
-require 'base64'
+require_relative '../../../spec_helper'
 
 describe Nrtflrx::Request::Params::Signature do
   before do

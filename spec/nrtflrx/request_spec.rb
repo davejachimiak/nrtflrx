@@ -1,10 +1,7 @@
 require_relative '../../lib/nrtflrx.rb'
 require_relative '../../lib/nrtflrx/request.rb'
 require_relative '../../lib/nrtflrx/request/params.rb'
-
-require 'minitest/autorun'
-require 'mocha'
-require 'net/http'
+require_relative '../spec_helper'
 
 describe Nrtflrx::Request do
   before do

@@ -1,7 +1,5 @@
 require_relative '../../../lib/nrtflrx/request/params'
-
-require 'minitest/autorun'
-require 'mocha'
+require_relative '../../spec_helper'
 
 describe Nrtflrx::Request::Params do
   before do

@@ -1,6 +1,6 @@
 require_relative '../lib/nrtflrx'
+require_relative 'spec_helper'
 
-require 'minitest/autorun'
 
 describe Nrtflrx do
   describe '#consumer_key' do

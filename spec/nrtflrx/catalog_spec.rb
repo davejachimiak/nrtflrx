@@ -1,7 +1,5 @@
 require_relative '../../lib/nrtflrx/catalog.rb'
-
-require 'minitest/autorun'
-require 'mocha'
+require_relative '../spec_helper'
 
 describe Nrtflrx::Catalog do
   describe '#request' do
