@@ -17,10 +17,10 @@ module Nrtflrx
         @oauth_version          = OAUTH_VERSION
       end
 
-      def as_string
-        params_with_oauth_signature.map do |type, value|
-          "#{type.to_s}=#{value}"
-        end.join('&')
+      def as_hash
+        params_hash_sans_signature = Hash[params_with_values_for_signature]
+
+        params_hash_sans_signature.merge!({oauth_signature: oauth_signature})
       end
 
       def oauth_signature
@@ -31,11 +31,6 @@ module Nrtflrx
       end
 
       private
-
-      def params_with_oauth_signature
-        params_sans_signature_hash = Hash[params_with_values_for_signature]
-        params_sans_signature_hash.merge!({oauth_signature: oauth_signature})
-      end
 
       def params_with_values_for_signature
         ivars_sans_base_path.map do |ivar|

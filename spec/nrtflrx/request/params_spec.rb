@@ -49,16 +49,16 @@ describe Nrtflrx::Request::Params do
     end
   end
 
-  describe '#as_string' do
+  describe '#as_hash' do
     it 'returns a string of the other methods names in this class and their values' do
       @params.stubs(:instance_variables).returns [:@daemon, :@father, :@base_path]
       @params.stubs(:instance_variable_get).with(:@daemon).returns 'omen'
       @params.stubs(:instance_variable_get).with(:@father).returns 'Robert'
       @params.stubs(:oauth_signature).returns 'hancock'
 
-      params_string = @params.as_string
+      params_hash = @params.as_hash
 
-      params_string.must_equal 'daemon=omen&father=Robert&oauth_signature=hancock'
+      params_hash.must_equal({ daemon: 'omen', father: 'Robert', oauth_signature: 'hancock' })
     end
   end
 
