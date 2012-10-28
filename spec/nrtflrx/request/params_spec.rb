@@ -49,6 +49,17 @@ describe Nrtflrx::Request::Params do
     end
   end
 
+  describe '#add_signature' do
+    it "adds the oauth_signature to the param's ivars" do
+      @params.stubs(:oauth_signature).returns 'so signy'
+
+      @params.add_signature
+
+      oauth_signature_ivar = @params.instance_variable_get :@oauth_signature
+      oauth_signature_ivar.must_equal 'so signy'
+    end
+  end
+
   describe '#as_hash' do
     it 'returns a string of the other methods names in this class and their values' do
       @params.stubs(:instance_variables).returns [:@daemon, :@father, :@base_path]
@@ -58,7 +69,7 @@ describe Nrtflrx::Request::Params do
 
       params_hash = @params.as_hash
 
-      params_hash.must_equal({ daemon: 'omen', father: 'Robert', oauth_signature: 'hancock' })
+      params_hash.must_equal({ daemon: 'omen', father: 'Robert' })
     end
   end
 

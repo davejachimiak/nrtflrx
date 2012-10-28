@@ -14,30 +14,32 @@ module Nrtflrx
         @oauth_version          = OAUTH_VERSION
       end
 
+      def add_signature
+        @oauth_signature = oauth_signature
+      end
+
       def as_hash
-        as_hash_sans_signature.merge!({oauth_signature: oauth_signature})
+        param_names_with_values
       end
 
       def oauth_signature
         signature = Nrtflrx::Request::Params::Signature.
-          new(@base_path, as_hash_sans_signature)
+          new(@base_path, param_names_with_values)
 
         signature.sign
       end
 
       private
 
-      def as_hash_sans_signature
-        Hash[params_with_values_for_signature]
-      end
-
-      def params_with_values_for_signature
-        ivars_sans_base_path.map do |ivar|
+      def param_names_with_values
+        name_value_pairs = param_names.map do |ivar|
           [sanitize_ivar(ivar), instance_variable_get(ivar)]
         end
+
+        Hash[name_value_pairs]
       end
 
-      def ivars_sans_base_path
+      def param_names
         instance_variables.reject do |ivar|
           ivar == :@base_path
         end

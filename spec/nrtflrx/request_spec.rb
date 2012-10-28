@@ -1,7 +1,10 @@
+require_relative '../../lib/nrtflrx.rb'
 require_relative '../../lib/nrtflrx/request.rb'
+require_relative '../../lib/nrtflrx/request/params.rb'
 
 require 'minitest/autorun'
 require 'mocha'
+require 'net/http'
 
 describe Nrtflrx::Request do
   before do
@@ -64,6 +67,7 @@ describe Nrtflrx::Request do
     it 'calls Nrtflrx::Request::Params.new.as_hash' do
       params = Nrtflrx::Request::Params.new(@request.base_path)
       params.expects(:as_hash)
+      params.expects(:add_signature)
       Nrtflrx::Request::Params.expects(:new).with(@request.base_path).returns params
 
       @request.params
