@@ -13,7 +13,12 @@ module Nrtflrx
         end
 
         def sign
-          percent_encode(chomped_encoded_signature)
+          sha               = OpenSSL::Digest::SHA1.new
+          shared_secret     = "#{Nrtflrx.shared_secret}&"
+          raw_signature     = OpenSSL::HMAC.digest(sha, shared_secret, base_string)
+          encoded_signature = Base64.encode64(raw_signature)
+
+          encoded_signature.chomp
         end
 
         def base_string
@@ -24,15 +29,6 @@ module Nrtflrx
         end
 
         private
-
-        def chomped_encoded_signature
-          feather           = OpenSSL::Digest::SHA1.new
-          ink               = "#{Nrtflrx.shared_secret}&"
-          raw_signature     = OpenSSL::HMAC.digest(feather, ink, base_string)
-          encoded_signature = Base64.encode64(raw_signature)
-
-          encoded_signature.chomp
-        end
 
         def params_string
           ordered_params = params.sort
