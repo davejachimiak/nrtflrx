@@ -18,19 +18,20 @@ module Nrtflrx
       end
 
       def as_hash
-        params_hash_sans_signature = Hash[params_with_values_for_signature]
-
-        params_hash_sans_signature.merge!({oauth_signature: oauth_signature})
+        as_hash_sans_signature.merge!({oauth_signature: oauth_signature})
       end
 
       def oauth_signature
-        hash_for_signature = Hash[params_with_values_for_signature]
-        signature          = Nrtflrx::Request::Params::Signature.new(@base_path, hash_for_signature)
+        signature = Nrtflrx::Request::Params::Signature.new(@base_path, as_hash_sans_signature)
 
         signature.sign
       end
 
       private
+
+      def as_hash_sans_signature
+        Hash[params_with_values_for_signature]
+      end
 
       def params_with_values_for_signature
         ivars_sans_base_path.map do |ivar|
