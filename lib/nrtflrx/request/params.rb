@@ -9,34 +9,18 @@ module Nrtflrx
       OAUTH_VERSION          = '1.0'
 
       def initialize(base_path)
-        @base_path = base_path
-      end
-
-      def as_hash
-        params_methods = public_methods(false)
-        param_types    = params_methods.reject { |method| method == __method__ }
-
-        Hash[param_types_with_values(param_types)]
-      end
-
-      def oauth_consumer_key
-        @oauth_consumer_key = Nrtflrx.consumer_key
-      end
-
-      def oauth_nonce
-        @oauth_nonce ||= rand(NONCE_UPPER_LIMIT)
-      end
-
-      def oauth_signature_method
+        @base_path              = base_path
+        @oauth_consumer_key     = Nrtflrx.consumer_key
+        @oauth_nonce            = rand(NONCE_UPPER_LIMIT)
         @oauth_signature_method = OAUTH_SIGNATURE_METHOD
+        @oauth_timestamp        = Time.now.to_i
+        @oauth_version          = OAUTH_VERSION
       end
 
-      def oauth_timestamp
-        @oauth_timestamp ||= Time.now.to_i.to_s
-      end
-
-      def oauth_version
-        @oauth_version = OAUTH_VERSION
+      def as_string
+        params_with_oauth_signature.map do |type, value|
+          "#{type.to_s}=#{value}"
+        end.join('&')
       end
 
       def oauth_signature
@@ -48,14 +32,9 @@ module Nrtflrx
 
       private
 
-      def param_types_with_values(param_types)
-        param_types.map do |param_type|
-          [param_type, param_value(param_type)]
-        end
-      end
-
-      def param_value(param_type)
-        send(param_type)
+      def params_with_oauth_signature
+        params_sans_signature_hash = Hash[params_with_values_for_signature]
+        params_sans_signature_hash.merge!({oauth_signature: oauth_signature})
       end
 
       def params_with_values_for_signature
