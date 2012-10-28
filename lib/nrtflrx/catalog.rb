@@ -1,5 +1,3 @@
-require_relative 'request'
-
 module Nrtflrx
   class Catalog
     def self.request
