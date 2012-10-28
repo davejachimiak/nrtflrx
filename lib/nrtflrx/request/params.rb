@@ -1,6 +1,3 @@
-require_relative '../../nrtflrx'
-require_relative '../../nrtflrx/request/params/signature'
-
 module Nrtflrx
   class Request
     class Params

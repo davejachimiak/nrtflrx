@@ -1,6 +1,3 @@
-require 'net/http'
-require_relative 'request/params'
-
 module Nrtflrx
   class Request
     BASE_URL = 'http://api-public.netflix.com'

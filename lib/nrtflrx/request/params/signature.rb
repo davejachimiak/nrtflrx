@@ -1,6 +1,3 @@
-require 'cgi'
-require 'base64'
-
 module Nrtflrx
   class Request
     class Params

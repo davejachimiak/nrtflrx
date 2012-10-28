@@ -1,4 +1,14 @@
-require_relative 'nrtflrx/catalog'
+require 'net/http'
+require 'cgi'
+require 'base64'
+
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
+require 'nrtflrx'
+require 'nrtflrx/catalog'
+require 'nrtflrx/request'
+require 'nrtflrx/request/params'
+require 'nrtflrx/request/params/signature'
 
 module Nrtflrx
   class << self
