@@ -3,7 +3,7 @@ require_relative '../../../spec_helper'
 
 describe Nrtflrx::Request::Params::Signature do
   before do
-    @signature = Nrtflrx::Request::Params::Signature.new('base path', { cool: 'too cool'})
+    @signature = Nrtflrx::Request::Params::Signature.new('base path', { cool: 'too cool' })
   end
 
   describe 'initialize' do

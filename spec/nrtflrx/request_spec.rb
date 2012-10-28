@@ -9,7 +9,7 @@ describe Nrtflrx::Request do
   end
 
   describe '#initialize' do
-    it 'instantiates the resource_path with poop' do
+    it 'instantiates the resource_path with clown_sauce' do
       resource_path_ivar = @request.instance_variable_get(:@resource_path)
 
       resource_path_ivar.must_equal 'clown_sauce'
