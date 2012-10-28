@@ -34,7 +34,7 @@ describe Nrtflrx::Request do
   describe '#execute' do
     it 'performs a get request with the request uri' do
       @request.stubs(:uri).returns 'sauce'
-      Net::HTTP.expects(:get_response).with 'sauce'
+      Net::HTTP.expects(:get).with 'sauce'
 
       @request.execute
     end
