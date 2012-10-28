@@ -68,11 +68,11 @@ describe Nrtflrx::Request::Params::Signature do
       OpenSSL::Digest::SHA1.stubs(:new).returns 'the digest'
       OpenSSL::HMAC.stubs(:digest).with('the digest', 'shared secret&', 'base string').
         returns 'raw signature'
-      Base64.stubs(:encode64).with('raw signature').returns "encoded signature=\n"
+      Base64.stubs(:encode64).with('raw signature').returns "encodedsignature=\n"
 
       signed_signature = signature.sign
 
-      signed_signature.must_equal 'encoded+signature='
+      signed_signature.must_equal 'encodedsignature='
     end
   end
 
