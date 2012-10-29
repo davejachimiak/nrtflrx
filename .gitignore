@@ -1,1 +1,2 @@
 ./Gemfile
+./features/step_definitions/sensitive.rb
