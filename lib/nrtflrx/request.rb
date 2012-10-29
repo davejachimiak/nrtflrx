@@ -27,6 +27,7 @@ module Nrtflrx
       request_params = Nrtflrx::Request::Params.new(base_path)
 
       request_params.add_signature
+
       request_params.as_hash
     end
   end
