@@ -7,5 +7,6 @@ Feature: Developer adds to user queue
     Given a working key
     And a working shared secret
     And an active user's account information
+    And I retrieve the user's id and oauth tokens
     When I add Rounders to the user's queue
     Then Rounders should be in the queue
