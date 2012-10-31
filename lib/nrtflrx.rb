@@ -9,9 +9,15 @@ require 'nrtflrx/catalog'
 require 'nrtflrx/request'
 require 'nrtflrx/request/params'
 require 'nrtflrx/request/params/signature'
+require 'nrtflrx/queue'
+require 'nrtflrx/user_authenticators'
 
 module Nrtflrx
   class << self
     attr_accessor :consumer_key, :shared_secret
+  end
+
+  def self.Queue(user_authenticators)
+    Nrtflrx::Queue.new(user_authenticators)
   end
 end
