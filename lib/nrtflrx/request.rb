@@ -1,11 +1,10 @@
 module Nrtflrx
   class Request
-    BASE_URL = 'http://api-public.netflix.com'
+    attr_reader :resource_path, :sub_domain
 
-    attr_reader :resource_path
-
-    def initialize(resource_path)
+    def initialize(resource_path, sub_domain='api-public')
       @resource_path = resource_path
+      @sub_domain    = sub_domain
     end
 
     def execute
@@ -20,7 +19,7 @@ module Nrtflrx
     end
 
     def base_path
-      "#{BASE_URL}/#{resource_path}"
+      "http://#{sub_domain}.netflix.com/#{resource_path}"
     end
 
     def params
