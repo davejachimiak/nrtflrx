@@ -21,18 +21,6 @@ describe Nrtflrx::UserAuthenticators do
 
       password_ivar.must_equal 'cool'
     end
-
-    it 'calls get_request_token' do
-      Nrtflrx::UserAuthenticators.any_instance.expects(:get_request_token)
-
-      Nrtflrx::UserAuthenticators.new(@login_info)
-    end
-
-    it 'calls set_authenticators' do
-      Nrtflrx::UserAuthenticators.any_instance.expects(:set_authenticators)
-
-      Nrtflrx::UserAuthenticators.new(@login_info)
-    end
   end
 
   describe '#get_request_token' do

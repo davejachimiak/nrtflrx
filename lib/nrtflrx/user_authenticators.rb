@@ -3,9 +3,6 @@ module Nrtflrx
     def initialize(login_info)
       @name     = login_info[:name]
       @password = login_info[:password]
-
-      get_request_token
-      set_authenticators
     end
 
     def get_request_token

@@ -1,5 +1,7 @@
 Given /^I retrieve the user's id and oauth tokens$/ do
   @user_authenticators = Nrtflrx::UserAuthenticators.new(@login_info)
+  @user_authenticators.get_request_token
+  @user_authenticators.set_authenticators
 end
 
 When /^I add Rounders to the user's queue$/ do
