@@ -22,13 +22,23 @@ describe Nrtflrx do
     end
   end
 
-  describe 'request_token' do
+  describe '.request_token' do
     it 'returns a request token to be used for getting user authenticators' do
       request = Nrtflrx::Request.new('oauth/request_token')
       request.stubs(:send).returns 'Eyes Wide Shut'
       Nrtflrx::Request.stubs(:new).with('oauth/request_token').returns request
 
       Nrtflrx.request_token.must_equal 'Eyes Wide Shut'
+    end
+  end
+
+  describe '#request' do
+    it 'sends a request with the catalog path' do
+      request = Nrtflrx::Request.new('catalog/titles/index')
+      request.stubs(:send).returns 'Matalog'
+      Nrtflrx::Request.stubs(:new).with('catalog/titles/index').returns request
+
+      Nrtflrx.catalog.must_equal 'Matalog'
     end
   end
 end
