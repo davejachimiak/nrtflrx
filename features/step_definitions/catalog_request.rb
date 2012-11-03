@@ -1,5 +1,5 @@
 When /^I submit a catalog request$/ do
-  @request = Nrtflrx::Catalog.request
+  @request = Nrtflrx.catalog
 end
 
 Then /^I successfully receive a catalog in xml format$/ do

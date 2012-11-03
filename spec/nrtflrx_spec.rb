@@ -32,7 +32,7 @@ describe Nrtflrx do
     end
   end
 
-  describe '#request' do
+  describe '.request' do
     it 'sends a request with the catalog path' do
       request = Nrtflrx::Request.new('catalog/titles/index')
       request.stubs(:send).returns 'Matalog'

@@ -1,11 +1,12 @@
 Given /^I retrieve the user's id and oauth tokens$/ do
-  @user_authenticators = Nrtflrx::UserAuthenticators.new(@login_info)
-  @user_authenticators.get_request_token
-  @user_authenticators.set_authenticators
+  @user         = Nrtflrx::User.new(login_credentials)
+  request_token = Nrtflrx.request_token
+
+  @user.set_authenticators(request_token)
 end
 
 When /^I add Rounders to the user's queue$/ do
-  @queue              = Nrtflrx::Queue(@user_authenticators)
+  @queue              = @user.queue
   rounders_netflix_id = '17236920'
 
   @queue.add(rounders_netflix_id)
