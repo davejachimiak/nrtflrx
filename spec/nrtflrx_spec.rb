@@ -21,4 +21,14 @@ describe Nrtflrx do
       Nrtflrx.shared_secret.must_equal 'BLURGH'
     end
   end
+
+  describe 'request_token' do
+    it 'returns a request token to be used for getting user authenticators' do
+      request = Nrtflrx::Request.new('oauth/request_token')
+      request.stubs(:send).returns 'Eyes Wide Shut'
+      Nrtflrx::Request.stubs(:new).with('oauth/request_token').returns request
+
+      Nrtflrx.request_token.must_equal 'Eyes Wide Shut'
+    end
+  end
 end

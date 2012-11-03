@@ -23,19 +23,6 @@ describe Nrtflrx::UserAuthenticators do
     end
   end
 
-  describe '#get_request_token' do
-    it 'gets the request token and sets it to @request_token' do
-      request = Nrtflrx::Request.new('oauth/request_token')
-      request.stubs(:send).returns 'Eyes Wide Shut'
-      Nrtflrx::Request.stubs(:new).with('oauth/request_token').returns request
-
-      @user_authenticators.get_request_token
-      request_token_ivar = @user_authenticators.instance_variable_get :@request_token
-
-      request_token_ivar.must_equal 'Eyes Wide Shut'
-    end
-  end
-
   describe '#set_authenticators' do
   end
 end

@@ -17,6 +17,10 @@ module Nrtflrx
     attr_accessor :consumer_key, :shared_secret
   end
 
+  def self.request_token
+    Nrtflrx::Request.new('oauth/request_token').send
+  end
+
   def self.Queue(user_authenticators)
     Nrtflrx::Queue.new(user_authenticators)
   end
