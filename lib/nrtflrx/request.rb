@@ -7,7 +7,7 @@ module Nrtflrx
       @sub_domain    = sub_domain
     end
 
-    def execute
+    def send
       Net::HTTP.get(uri)
     end
 

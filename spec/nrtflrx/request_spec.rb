@@ -55,12 +55,12 @@ describe Nrtflrx::Request do
     end
   end
 
-  describe '#execute' do
+  describe '#send' do
     it 'performs a get request with the request uri' do
       @request.stubs(:uri).returns 'sauce'
       Net::HTTP.expects(:get).with 'sauce'
 
-      @request.execute
+      @request.send
     end
   end
 

@@ -1,9 +1,7 @@
 module Nrtflrx
   class Catalog
     def self.request
-      request = Nrtflrx::Request.new('catalog/titles/index')
-
-      request.execute
+      Nrtflrx::Request.new('catalog/titles/index').send
     end
   end
 end

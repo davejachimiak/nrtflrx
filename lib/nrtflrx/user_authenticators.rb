@@ -6,8 +6,7 @@ module Nrtflrx
     end
 
     def get_request_token
-      request_token_request = Nrtflrx::Request.new('oauth/request_token')
-      @request_token        = request_token_request.execute
+      @request_token = Nrtflrx::Request.new('oauth/request_token').send
     end
 
     def set_authenticators

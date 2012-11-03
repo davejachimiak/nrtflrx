@@ -26,7 +26,7 @@ describe Nrtflrx::UserAuthenticators do
   describe '#get_request_token' do
     it 'gets the request token and sets it to @request_token' do
       request = Nrtflrx::Request.new('oauth/request_token')
-      request.stubs(:execute).returns 'Eyes Wide Shut'
+      request.stubs(:send).returns 'Eyes Wide Shut'
       Nrtflrx::Request.stubs(:new).with('oauth/request_token').returns request
 
       @user_authenticators.get_request_token
