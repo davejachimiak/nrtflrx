@@ -9,7 +9,6 @@ require 'nrtflrx/request'
 require 'nrtflrx/request/params'
 require 'nrtflrx/request/params/signature'
 require 'nrtflrx/queue'
-require 'nrtflrx/user_authenticators'
 
 module Nrtflrx
   class << self
