@@ -22,6 +22,16 @@ describe Nrtflrx do
     end
   end
 
+  describe '.instant_catalog' do
+    it 'returns the instant catalog' do
+      request = Nrtflrx::Request.new('catalog/titles/streaming')
+      request.stubs(:send).returns 'THE INSTANT CATALOG'
+      Nrtflrx::Request.stubs(:new).with('catalog/titles/streaming').returns request
+
+      Nrtflrx.instant_catalog.must_equal 'THE INSTANT CATALOG'
+    end
+  end
+
   describe '.request_token' do
     it 'returns a request token to be used for getting user authenticators' do
       request = Nrtflrx::Request.new('oauth/request_token')
@@ -29,16 +39,6 @@ describe Nrtflrx do
       Nrtflrx::Request.stubs(:new).with('oauth/request_token').returns request
 
       Nrtflrx.request_token.must_equal 'Eyes Wide Shut'
-    end
-  end
-
-  describe '.request_token' do
-    it 'sends a request with the catalog path' do
-      request = Nrtflrx::Request.new('catalog/titles/index')
-      request.stubs(:send).returns 'Matalog'
-      Nrtflrx::Request.stubs(:new).with('catalog/titles/index').returns request
-
-      Nrtflrx.catalog.must_equal 'Matalog'
     end
   end
 end

@@ -15,8 +15,8 @@ module Nrtflrx
     attr_accessor :consumer_key, :shared_secret
   end
 
-  def self.catalog
-    Nrtflrx::Request.new('catalog/titles/index').send
+  def self.instant_catalog
+    Nrtflrx::Request.new('catalog/titles/streaming').send
   end
 
   def self.request_token
@@ -24,6 +24,6 @@ module Nrtflrx
   end
 
   def self.Queue(user_authenticators)
-    Nrtflrx::Queue.new(user_authenticators)
+    Nrtflrx::Queue.new user_authenticators
   end
 end
