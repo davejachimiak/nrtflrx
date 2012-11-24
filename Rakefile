@@ -9,10 +9,6 @@ namespace :test do
     system 'turn spec/nrtflrx_spec.rb'
   end
 
-  task :catalog do
-    system 'turn spec/nrtflrx/catalog_spec.rb'
-  end
-
   task :request do
     system 'turn spec/nrtflrx/request_spec.rb'
   end
