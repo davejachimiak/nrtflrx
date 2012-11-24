@@ -1,5 +1,5 @@
-require 'cgi'
 require 'base64'
+require 'cgi'
 require 'net/http'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
