@@ -11,9 +11,9 @@ Gem::Specification.new do |s|
 
   s.test_files    = `git ls-files -- {spec,features}/*`.split("\n")
 
-  s.add_development_dependency 'rake', '0.9.2'
+  s.add_development_dependency 'rake', '0.9.2.2'
   s.add_development_dependency 'cucumber'
-  s.add_development_dependency 'mocha', require: false
-  s.add_development_dependency 'turn', require: false
+  s.add_development_dependency 'mocha'
+  s.add_development_dependency 'turn'
   s.add_development_dependency 'minitest'
 end

@@ -1,3 +1,8 @@
+PATH
+  remote: .
+  specs:
+    nrtflrx (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -26,4 +31,6 @@ DEPENDENCIES
   cucumber
   minitest
   mocha
+  nrtflrx!
+  rake (= 0.9.2.2)
   turn
