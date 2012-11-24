@@ -3,6 +3,8 @@ require_relative '../../lib/nrtflrx/request.rb'
 require_relative '../../lib/nrtflrx/request/params.rb'
 require_relative '../spec_helper'
 
+require 'ostruct'
+
 describe Nrtflrx::Request do
   before do
     @request = Nrtflrx::Request.new('clown_sauce')
@@ -56,11 +58,39 @@ describe Nrtflrx::Request do
   end
 
   describe '#send' do
-    it 'performs a get request with the request uri' do
-      @request.stubs(:uri).returns 'sauce'
-      Net::HTTP.expects(:get).with 'sauce'
+    before do
+      @request.stubs(:uri).returns 'foo'
+      @direct_response               = OpenStruct.new(body: 'cool')
+      @redirect_response             = Net::HTTPTemporaryRedirect.new('','','')
+      @redirect_response['location'] = 'redirect location'
+    end
 
-      @request.send
+    describe 'when the response is not a redirect' do
+      it 'returns the body of that response' do
+        Net::HTTP.stubs(:get_response).with('foo').returns @direct_response
+
+        @request.send.must_equal 'cool'
+      end
+    end
+
+    describe 'when the response is a redirect' do
+      it 'returns the body of that response' do
+        Net::HTTP.stubs(:get_response).with('foo').returns @redirect_response
+        @request.expects(:redirect_response_body).with @redirect_response
+
+        @request.send
+      end
+    end
+  end
+
+  describe '#redirect_response_body' do
+    it 'gets the body of the response of the path passed in' do
+      redirect_response             = Net::HTTPTemporaryRedirect.new('','','')
+      redirect_response['location'] = 'corn'
+      Net::HTTP.stubs(:get_response).with(URI 'corn').
+        returns OpenStruct.new(body: 'foo')
+
+      @request.redirect_response_body(redirect_response).must_equal 'foo'
     end
   end
 
@@ -99,11 +129,11 @@ describe Nrtflrx::Request do
   describe '#params' do
     it 'calls Nrtflrx::Request::Params.new.as_hash' do
       params = Nrtflrx::Request::Params.new(@request.base_path)
-      params.expects(:as_hash)
       params.expects(:add_signature)
-      Nrtflrx::Request::Params.expects(:new).with(@request.base_path).returns params
+      params.stubs(:as_hash).returns({ hashy: 'so hashy' })
+      Nrtflrx::Request::Params.stubs(:new).with(@request.base_path).returns params
 
-      @request.params
+      @request.params.must_equal({ hashy: 'so hashy' })
     end
   end
 end
