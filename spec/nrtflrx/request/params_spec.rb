@@ -1,4 +1,5 @@
 require_relative '../../../lib/nrtflrx/request/params'
+require_relative '../../../lib/nrtflrx/request/params/oauth_signature'
 require_relative '../../spec_helper'
 
 describe Nrtflrx::Request::Params do
@@ -74,6 +75,15 @@ describe Nrtflrx::Request::Params do
   describe '#oauth_signature' do
     it 'calls sign on a signature object, to which other params and ' +
       'the base path are passed' do
+      @params.stubs(:instance_variables).returns [:@param]
+      @params.stubs(:instance_variable_get).with(:@param).returns 'yurp'
+      oauth_signature = Nrtflrx::Request::Params::OAuthSignature.
+        new('base path', {param: 'yurp'})
+      oauth_signature.stubs(:sign).returns 'signed'
+      Nrtflrx::Request::Params::OAuthSignature.stubs(:new).
+        with('base path', {param: 'yurp'}).returns oauth_signature
+
+      @params.oauth_signature.must_equal 'signed'
     end
   end
 end

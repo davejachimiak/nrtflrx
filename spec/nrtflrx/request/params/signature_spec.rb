@@ -1,9 +1,14 @@
-require_relative '../../../../lib/nrtflrx/request/params/signature'
+require_relative '../../../../lib/nrtflrx/request/params/oauth_signature'
 require_relative '../../../spec_helper'
 
-describe Nrtflrx::Request::Params::Signature do
+require 'CGI'
+require 'net/http'
+require 'base64'
+
+describe Nrtflrx::Request::Params::OAuthSignature do
   before do
-    @signature = Nrtflrx::Request::Params::Signature.new('base path', { cool: 'too cool' })
+    @signature = Nrtflrx::Request::Params::OAuthSignature.
+      new('base path', { cool: 'too cool' })
   end
 
   describe 'initialize' do
@@ -15,7 +20,7 @@ describe Nrtflrx::Request::Params::Signature do
       end
 
       it 'another way' do
-        signature = Nrtflrx::Request::Params::Signature.new('pretty please', {})
+        signature = Nrtflrx::Request::Params::OAuthSignature.new('pretty please', {})
         base_path = signature.instance_variable_get :@base_path
 
         base_path.must_equal 'pretty please'
@@ -30,7 +35,7 @@ describe Nrtflrx::Request::Params::Signature do
       end
 
       it 'another way' do
-        signature = Nrtflrx::Request::Params::Signature.new('pretty please', 'parooms')
+        signature = Nrtflrx::Request::Params::OAuthSignature.new('pretty please', 'parooms')
         params_ivar = signature.instance_variable_get :@params
 
         params_ivar.must_equal 'parooms'
@@ -58,7 +63,7 @@ describe Nrtflrx::Request::Params::Signature do
     it 'uses a SHA1 object to sign base string with consumer key, encodes ' +
       'the signature with Base64, chomps the encoding, and escapes the ' +
       'signature with CGI' do
-      signature = Nrtflrx::Request::Params::Signature.new('base path', { oauth_consumer_key: 'consumer key' })
+      signature = Nrtflrx::Request::Params::OAuthSignature.new('base path', { oauth_consumer_key: 'consumer key' })
       signature.stubs(:base_string).returns 'base string'
       Nrtflrx.stubs(:shared_secret).returns 'shared secret'
       OpenSSL::Digest::SHA1.stubs(:new).returns 'the digest'
@@ -78,7 +83,7 @@ describe Nrtflrx::Request::Params::Signature do
       params = { oauth_consumer_key: 'noon*#?',
                  oauth_banche:       'which' }
 
-      signature = Nrtflrx::Request::Params::Signature.new('base_url/resource_path', params)
+      signature = Nrtflrx::Request::Params::OAuthSignature.new('base_url/resource_path', params)
       base_string = signature.base_string
 
       base_string.must_equal 'GET&base_url%2Fresource_path&oauth_banche%3Dwhich%26oauth_consumer_key%3Dnoon%2A%23%3F'

@@ -8,7 +8,6 @@ require 'nrtflrx'
 require 'nrtflrx/request'
 require 'nrtflrx/request/params'
 require 'nrtflrx/request/params/signature'
-require 'nrtflrx/queue'
 
 module Nrtflrx
   class << self
@@ -21,9 +20,5 @@ module Nrtflrx
 
   def self.request_token
     Nrtflrx::Request.new('oauth/request_token').send
-  end
-
-  def self.Queue(user_authenticators)
-    Nrtflrx::Queue.new user_authenticators
   end
 end

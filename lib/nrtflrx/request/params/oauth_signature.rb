@@ -1,7 +1,7 @@
 module Nrtflrx
   class Request
     class Params
-      class Signature
+      class OAuthSignature
         attr_reader :base_path, :params
 
         def initialize(base_path, params)
@@ -11,17 +11,15 @@ module Nrtflrx
 
         def sign
           sha               = OpenSSL::Digest::SHA1.new
-          shared_secret     = "#{Nrtflrx.shared_secret}&"
-          raw_signature     = OpenSSL::HMAC.digest(sha, shared_secret, base_string)
+          ink               = "#{Nrtflrx.shared_secret}&"
+          raw_signature     = OpenSSL::HMAC.digest(sha, ink, base_string)
           encoded_signature = Base64.encode64(raw_signature)
-
           encoded_signature.chomp
         end
 
         def base_string
           encoded_base_path     = percent_encode(base_path)
           encoded_params_string = percent_encode(params_string)
-
           "GET&#{encoded_base_path}&#{encoded_params_string}"
         end
 
@@ -29,7 +27,6 @@ module Nrtflrx
 
         def params_string
           ordered_params = params.sort
-
           ordered_params.map { |type, value| "#{type.to_s}=#{value}" }.join('&')
         end
 
