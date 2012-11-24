@@ -3,8 +3,8 @@ Feature: Developer requests catalog
   As a developer using the Netflix API
   I want to download Netflix's catalog
 
-  Scenario: developer requests catalog
+  Scenario: developer requests instant catalog
     Given a working key
     And a working shared secret
-    When I submit a catalog request
+    When I submit an instant catalog request
     Then I successfully receive a catalog in xml format

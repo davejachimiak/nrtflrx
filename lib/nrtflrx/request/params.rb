@@ -43,7 +43,8 @@ module Nrtflrx
 
       def param_names
         instance_variables.reject do |ivar|
-          ivar == :@base_path
+          ivar == :@base_path ||
+            ivar == :@oauth_signature_source
         end
       end
 

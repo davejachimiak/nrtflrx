@@ -75,7 +75,7 @@ describe Nrtflrx::Request::Params do
   describe '#oauth_signature' do
     it 'calls sign on a signature object, to which other params and ' +
       'the base path are passed' do
-      @params.stubs(:instance_variables).returns [:@param]
+      @params.stubs(:instance_variables).returns [:@param, :@oauth_signature_source]
       @params.stubs(:instance_variable_get).with(:@param).returns 'yurp'
       oauth_signature = Nrtflrx::Request::Params::OAuthSignature.
         new('base path', {param: 'yurp'})

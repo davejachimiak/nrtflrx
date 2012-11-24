@@ -7,7 +7,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'nrtflrx'
 require 'nrtflrx/request'
 require 'nrtflrx/request/params'
-require 'nrtflrx/request/params/signature'
+require 'nrtflrx/request/params/oauth_signature'
 
 module Nrtflrx
   class << self
