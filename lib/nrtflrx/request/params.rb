@@ -23,13 +23,15 @@ module Nrtflrx
       end
 
       def oauth_signature
-        signature = Nrtflrx::Request::Params::Signature.
-          new(@base_path, param_names_with_values)
-
-        signature.sign
+        oauth_signature_source(@base_path, param_names_with_values).sign
       end
 
       private
+
+      def oauth_signature_source(path, params)
+        @oauth_signature_source ||= Nrtflrx::Request::Params::OAuthSignature.
+          send(:new, path, params)
+      end
 
       def param_names_with_values
         name_value_pairs = param_names.map do |ivar|
