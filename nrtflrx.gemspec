@@ -5,7 +5,9 @@ Gem::Specification.new do |s|
   s.email         = 'dave.jachimiak@gmail.com'
   s.homepage      = 'http://github.com/davejachimiak'
   s.version       = '0.0.1'
-  s.files         = `git ls-files`.split("\n")
+  s.files         = `git ls-files`.split("\n").reject do |file_name|
+    /\.gem$/.match file_name
+  end
   s.require_paths = ['lib']
   s.platform      = Gem::Platform::RUBY
 
