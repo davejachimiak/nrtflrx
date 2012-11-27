@@ -3,5 +3,5 @@ Given /^a bad working key$/ do
 end
 
 Then /^the response is a bad consumer key exception object$/ do
-  @request.must_be_kind_of Nrtflrx::BadConsumerKeyError
+  @request.must_raise Nrtflrx::BadConsumerKeyError
 end

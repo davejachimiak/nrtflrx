@@ -9,6 +9,7 @@ module Nrtflrx
 
     def send
       response = Net::HTTP.get_response uri
+      raise BadConsumerKeyError if response.body == '<h1>403 Developer Inactive</h1>'
       if response.class == Net::HTTPTemporaryRedirect
         redirect_response_body response
       else
@@ -41,5 +42,8 @@ module Nrtflrx
     def params_source(base_path)
       @params_source ||= Nrtflrx::Request::Params.send(:new, base_path)
     end
+  end
+
+  class BadConsumerKeyError < StandardError
   end
 end
