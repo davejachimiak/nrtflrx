@@ -2,7 +2,7 @@ require 'base64'
 require 'cgi'
 require 'net/http'
 
-$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift File.dirname __FILE__
 
 require 'nrtflrx'
 require 'nrtflrx/request'
@@ -21,4 +21,8 @@ module Nrtflrx
   def self.request_token
     Nrtflrx::Request.new('oauth/request_token').send
   end
+
+  class BadConsumerKeyError < StandardError; end
+
+  class BadRequestError < StandardError; end
 end
