@@ -1,15 +1,17 @@
 module Nrtflrx
   class Request
+    BAD_CONSUMER_KEY_RESPONSE = '<h1>403 Developer Inactive</h1>'
+
     attr_reader :resource_path, :sub_domain, :params_source
 
-    def initialize(resource_path, sub_domain='api-public')
+    def initialize resource_path, sub_domain='api-public'
       @resource_path = resource_path
       @sub_domain    = sub_domain
     end
 
     def send
-      response = Net::HTTP.get_response uri
-      raise BadConsumerKeyError if response.body == '<h1>403 Developer Inactive</h1>'
+      response = get_response uri
+      raise BadConsumerKeyError if response.body == BAD_CONSUMER_KEY_RESPONSE
       if response.class == Net::HTTPTemporaryRedirect
         redirect_response_body response
       else
@@ -17,8 +19,8 @@ module Nrtflrx
       end
     end
 
-    def redirect_response_body(response)
-      Net::HTTP.get_response(URI(response['location'])).body
+    def redirect_response_body response
+      get_response(URI response['location']).body
     end
 
     def uri
@@ -39,11 +41,12 @@ module Nrtflrx
 
     private
 
-    def params_source(base_path)
-      @params_source ||= Nrtflrx::Request::Params.send(:new, base_path)
+    def params_source base_path
+      @params_source ||= Nrtflrx::Request::Params.send :new, base_path
     end
-  end
 
-  class BadConsumerKeyError < StandardError
+    def get_response uri
+      Net::HTTP.get_response uri
+    end
   end
 end

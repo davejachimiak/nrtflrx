@@ -76,7 +76,7 @@ describe Nrtflrx::Request do
 
     describe 'when the response is a redirect' do
       before do
-        @redirect_response             = Net::HTTPTemporaryRedirect.new('','','')
+        @redirect_response = Net::HTTPTemporaryRedirect.new('','','')
         @redirect_response.stubs(:body)
         @redirect_response['location'] = 'redirect location'
       end
@@ -91,14 +91,15 @@ describe Nrtflrx::Request do
 
     describe 'when the response signifies a bad consumer key' do
       before do
-        @bad_consumer_key_response     = Net::HTTPForbidden.new('','','')
-        @bad_consumer_key_response.stubs(:body).returns '<h1>403 Developer Inactive</h1>'
+        @bad_consumer_key_response = Net::HTTPForbidden.new('','','')
+        @bad_consumer_key_response.stubs(:body).
+          returns Nrtflrx::Request::BAD_CONSUMER_KEY_RESPONSE
       end
 
       it 'throws BadConsumerKeyError' do
         Net::HTTP.stubs(:get_response).with('foo').returns @bad_consumer_key_response
 
-        proc { @request.send }.must_raise Nrtflrx::BadConsumerKeyError
+        -> { @request.send }.must_raise Nrtflrx::BadConsumerKeyError
       end
     end
   end
