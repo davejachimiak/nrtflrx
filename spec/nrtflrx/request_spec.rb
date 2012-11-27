@@ -60,12 +60,14 @@ describe Nrtflrx::Request do
   describe '#send' do
     before do
       @request.stubs(:uri).returns 'foo'
-      @direct_response               = OpenStruct.new(body: 'cool')
-      @redirect_response             = Net::HTTPTemporaryRedirect.new('','','')
-      @redirect_response['location'] = 'redirect location'
     end
 
     describe 'when the response is not a redirect' do
+      before do
+        @direct_response = Net::HTTPOK.new '', '', ''
+        @direct_response.stubs(:body).returns 'cool'
+      end
+
       it 'returns the body of that response' do
         Net::HTTP.stubs(:get_response).with('foo').returns @direct_response
 
@@ -74,11 +76,44 @@ describe Nrtflrx::Request do
     end
 
     describe 'when the response is a redirect' do
+      before do
+        @redirect_response = Net::HTTPTemporaryRedirect.new('','','')
+        @redirect_response.stubs(:body)
+        @redirect_response['location'] = 'redirect location'
+      end
+
       it 'returns the body of that response' do
         Net::HTTP.stubs(:get_response).with('foo').returns @redirect_response
         @request.expects(:redirect_response_body).with @redirect_response
 
         @request.send
+      end
+    end
+
+    describe 'when the response signifies a bad consumer key' do
+      before do
+        @bad_consumer_key_response = Net::HTTPForbidden.new('','','')
+        @bad_consumer_key_response.stubs(:body).
+          returns Nrtflrx::Request::BAD_CONSUMER_KEY_RESPONSE
+      end
+
+      it 'throws BadConsumerKeyError' do
+        Net::HTTP.stubs(:get_response).with('foo').returns @bad_consumer_key_response
+
+        -> { @request.send }.must_raise Nrtflrx::BadConsumerKeyError
+      end
+    end
+
+    describe 'when the response signifies a bad consumer key' do
+      before do
+        @bad_response = Net::HTTPForbidden.new('','','')
+        @bad_response.stubs(:body)
+      end
+
+      it 'throws BadRequestError' do
+        Net::HTTP.stubs(:get_response).with('foo').returns @bad_response
+
+        -> { @request.send }.must_raise Nrtflrx::BadRequestError
       end
     end
   end

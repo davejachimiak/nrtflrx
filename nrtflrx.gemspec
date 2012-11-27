@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.authors       = ['Dave Jachimiak']
   s.email         = 'dave.jachimiak@gmail.com'
   s.homepage      = 'http://github.com/davejachimiak'
-  s.version       = '0.0.1'
+  s.version       = '0.0.2'
   s.files         = `git ls-files`.split("\n").reject do |file_name|
     /\.gem$/.match file_name
   end
