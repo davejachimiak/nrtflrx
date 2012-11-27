@@ -14,3 +14,9 @@ Feature: Developer requests catalog
     And a working shared secret
     When I submit an instant catalog request
     Then the response is a bad consumer key exception object
+
+  Scenario: developer requests catalog and a bad request happens for an unknown reason
+    Given a working key
+    And a bad shared secret
+    When I submit an instant catalog request
+    Then the response is a bad request error

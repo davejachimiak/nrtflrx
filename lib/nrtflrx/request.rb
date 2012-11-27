@@ -14,8 +14,10 @@ module Nrtflrx
       raise BadConsumerKeyError if response.body == BAD_CONSUMER_KEY_RESPONSE
       if response.class == Net::HTTPTemporaryRedirect
         redirect_response_body response
-      else
+      elsif response.class == Net::HTTPOK
         response.body
+      else
+        raise BadRequestError
       end
     end
 

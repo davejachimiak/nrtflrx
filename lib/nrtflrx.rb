@@ -22,6 +22,7 @@ module Nrtflrx
     Nrtflrx::Request.new('oauth/request_token').send
   end
 
-  class BadConsumerKeyError < StandardError
-  end
+  class BadConsumerKeyError < StandardError; end
+
+  class BadRequestError < StandardError; end
 end
