@@ -57,7 +57,7 @@ describe Nrtflrx::Request do
     end
   end
 
-  describe '#send' do
+  describe '#submit' do
     before do
       @request.stubs(:uri).returns 'foo'
     end
@@ -71,7 +71,7 @@ describe Nrtflrx::Request do
       it 'returns the body of that response' do
         Net::HTTP.stubs(:get_response).with('foo').returns @direct_response
 
-        @request.send.must_equal 'cool'
+        @request.submit.must_equal 'cool'
       end
     end
 
@@ -86,7 +86,7 @@ describe Nrtflrx::Request do
         Net::HTTP.stubs(:get_response).with('foo').returns @redirect_response
         @request.expects(:redirect_response_body).with @redirect_response
 
-        @request.send
+        @request.submit
       end
     end
 
@@ -100,7 +100,7 @@ describe Nrtflrx::Request do
       it 'throws BadConsumerKeyError' do
         Net::HTTP.stubs(:get_response).with('foo').returns @bad_consumer_key_response
 
-        -> { @request.send }.must_raise Nrtflrx::BadConsumerKeyError
+        -> { @request.submit }.must_raise Nrtflrx::BadConsumerKeyError
       end
     end
 
@@ -113,7 +113,7 @@ describe Nrtflrx::Request do
       it 'throws BadRequestError' do
         Net::HTTP.stubs(:get_response).with('foo').returns @bad_response
 
-        -> { @request.send }.must_raise Nrtflrx::BadRequestError
+        -> { @request.submit }.must_raise Nrtflrx::BadRequestError
       end
     end
   end

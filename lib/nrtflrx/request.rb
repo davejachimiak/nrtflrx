@@ -9,7 +9,7 @@ module Nrtflrx
       @sub_domain    = sub_domain
     end
 
-    def send
+    def submit
       response = get_response uri
       raise BadConsumerKeyError if response.body == BAD_CONSUMER_KEY_RESPONSE
       if response.class == Net::HTTPTemporaryRedirect
