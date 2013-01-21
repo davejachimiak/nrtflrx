@@ -4,12 +4,14 @@ require 'net/http'
 
 $LOAD_PATH.unshift File.dirname __FILE__
 
-require 'nrtflrx'
-require 'nrtflrx/request'
-require 'nrtflrx/request/params'
-require 'nrtflrx/request/params/oauth_signature'
-
 module Nrtflrx
+  require 'nrtflrx'
+  require 'nrtflrx/queue'
+  require 'nrtflrx/request'
+  require 'nrtflrx/request_token'
+  require 'nrtflrx/request/params'
+  require 'nrtflrx/request/params/oauth_signature'
+
   class << self
     attr_accessor :consumer_key, :shared_secret
   end

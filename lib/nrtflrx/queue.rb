@@ -1,0 +1,2 @@
+class Nrtflrx::Queue
+end

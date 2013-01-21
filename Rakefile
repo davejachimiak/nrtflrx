@@ -9,6 +9,14 @@ namespace :test do
     system 'turn spec/nrtflrx_spec.rb'
   end
 
+  task :queue do
+    system 'turn spec/nrtflrx/queue_spec.rb'
+  end
+
+  task :request_token do
+    system 'turn spec/nrtflrx/request_token_spec.rb'
+  end
+
   task :request do
     system 'turn spec/nrtflrx/request_spec.rb'
   end
