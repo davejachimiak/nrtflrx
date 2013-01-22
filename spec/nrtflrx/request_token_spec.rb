@@ -6,7 +6,9 @@ describe Nrtflrx::RequestToken do
     request = Nrtflrx::Request.new 'oauth/request_token'
     Nrtflrx::Request.stubs(:new).with('oauth/request_token').returns request
     request.stubs(:submit).
-      returns 'oauth_token=psvd6ta236taungqxrjhbkat&oauth_token_secret=ejSFZuWhe7eE&application_name=A+Better+Queue&login_url=https%3A%2F%2Fapi-user.netflix.com%2Foauth%2Flogin%3Foauth_token%3Dpsvd6ta236taungqxrjhbkat'
+      returns 'oauth_token=psvd6ta236taungqxrjhbkat&oauth_token_secret=ejSFZu' +
+      'Whe7eE&application_name=A+Better+Queue&login_url=https%3A%2F%2Fapi-use' +
+      'r.netflix.com%2Foauth%2Flogin%3Foauth_token%3Dpsvd6ta236taungqxrjhbkat'
 
     @request_token = Nrtflrx::RequestToken.new
   end

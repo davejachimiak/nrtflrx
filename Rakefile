@@ -13,6 +13,10 @@ namespace :test do
     system 'turn spec/nrtflrx/queue_spec.rb'
   end
 
+  task :oauth_login do
+    system 'turn spec/nrtflrx/oauth_login_spec.rb'
+  end
+
   task :request_token do
     system 'turn spec/nrtflrx/request_token_spec.rb'
   end
