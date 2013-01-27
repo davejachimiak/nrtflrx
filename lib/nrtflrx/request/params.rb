@@ -1,6 +1,8 @@
 module Nrtflrx
   class Request
     class Params
+      attr_reader :oauth_signature_source
+
       NONCE_UPPER_LIMIT      = 1000000000
       OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1'
       OAUTH_VERSION          = '1.0'
@@ -12,6 +14,9 @@ module Nrtflrx
         @oauth_signature_method = OAUTH_SIGNATURE_METHOD
         @oauth_timestamp        = Time.now.to_i
         @oauth_version          = OAUTH_VERSION
+        @oauth_signature_source = lambda do |path, params|
+          Nrtflrx::Request::Params::OAuthSignature.new path, params
+        end
       end
 
       def add_signature
@@ -23,15 +28,10 @@ module Nrtflrx
       end
 
       def oauth_signature
-        oauth_signature_source(@base_path, param_names_with_values).sign
+        oauth_signature_source.call(@base_path, param_names_with_values).sign
       end
 
       private
-
-      def oauth_signature_source path, params
-        @oauth_signature_source ||= Nrtflrx::Request::Params::OAuthSignature.
-          send :new, path, params
-      end
 
       def param_names_with_values
         name_value_pairs = param_names.map do |ivar|
