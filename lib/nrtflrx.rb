@@ -11,6 +11,7 @@ module Nrtflrx
   require 'nrtflrx/oauth_login'
   require 'nrtflrx/request_token'
   require 'nrtflrx/request/params'
+  require 'nrtflrx/subscriber_authenticator'
   require 'nrtflrx/request/params/oauth_signature'
 
   class << self
