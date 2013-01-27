@@ -7,6 +7,9 @@ module Nrtflrx
     def initialize resource_path, sub_domain='api-public'
       @resource_path = resource_path
       @sub_domain    = sub_domain
+      @params_source = lambda do |base_path|
+        Nrtflrx::Request::Params.new(base_path)
+      end
     end
 
     def submit
@@ -36,16 +39,12 @@ module Nrtflrx
     end
 
     def params
-      request_params = params_source base_path
+      request_params = params_source.(base_path)
       request_params.add_signature
       request_params.as_hash
     end
 
     private
-
-    def params_source base_path
-      @params_source ||= Nrtflrx::Request::Params.send :new, base_path
-    end
 
     def get_response uri
       Net::HTTP.get_response uri
