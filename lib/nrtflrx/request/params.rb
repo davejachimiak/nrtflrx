@@ -5,10 +5,10 @@ module Nrtflrx
       OAUTH_SIGNATURE_METHOD = 'HMAC-SHA1'
       OAUTH_VERSION          = '1.0'
 
-      def initialize(base_path)
+      def initialize base_path
         @base_path              = base_path
         @oauth_consumer_key     = Nrtflrx.consumer_key
-        @oauth_nonce            = rand(NONCE_UPPER_LIMIT)
+        @oauth_nonce            = rand NONCE_UPPER_LIMIT
         @oauth_signature_method = OAUTH_SIGNATURE_METHOD
         @oauth_timestamp        = Time.now.to_i
         @oauth_version          = OAUTH_VERSION
@@ -28,9 +28,9 @@ module Nrtflrx
 
       private
 
-      def oauth_signature_source(path, params)
+      def oauth_signature_source path, params
         @oauth_signature_source ||= Nrtflrx::Request::Params::OAuthSignature.
-          send(:new, path, params)
+          send :new, path, params
       end
 
       def param_names_with_values
@@ -48,7 +48,7 @@ module Nrtflrx
         end
       end
 
-      def sanitize_ivar(ivar)
+      def sanitize_ivar ivar
         ivar.to_s.gsub('@', '').to_sym
       end
     end
