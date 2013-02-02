@@ -3,32 +3,27 @@ require_relative '../../lib/nrtflrx'
 
 describe Nrtflrx::OAuthLoginRequest do
   before do
-    @email               = 'email'
-    @password            = 'password'
-    @oauth_token         = 'oauth token'
+    email         = 'email'
+    password      = 'password'
+    request_token = mock
+    Nrtflrx::OAuthLoginRequest::Params.stubs(:new).
+      with(email, password, request_token).
+      returns @params = mock
     @oauth_login_request = Nrtflrx::OAuthLoginRequest.
-      new @email, @password, @oauth_token
+      new email, password, request_token
   end
 
   describe 'initialize' do
-    it 'sets the email passed in' do
-      @oauth_login_request.email.must_equal @email
-    end
-
-    it 'sets the password passed in' do
-      @oauth_login_request.password.must_equal @password
-    end
-
-    it 'sets the oauth token passed in' do
-      @oauth_login_request.oauth_token.must_equal @oauth_token
-    end
-
     it 'sets the resource path' do
       @oauth_login_request.resource_path.must_equal '/oauth/login'
     end
 
     it 'sets the sub domain' do
       @oauth_login_request.sub_domain.must_equal 'api-user'
+    end
+
+    it 'sets a params_source' do
+      @oauth_login_request.params_source.must_equal @params
     end
   end
 
@@ -83,14 +78,10 @@ describe Nrtflrx::OAuthLoginRequest do
 
   describe '#params' do
     it 'gets the params as a hash' do
-      params_source = OpenStruct.new(as_hash: {})
-      @oauth_login_request.stubs(:params_source).returns params_source
+      @oauth_login_request.params_source.stubs(:as_hash).
+        returns params_hash = {}
 
-      @oauth_login_request.params.must_equal({
-        name:        @email,
-        password:    @password,
-        oauth_token: @oauth_token
-      })
+      @oauth_login_request.params.must_equal params_hash
     end
   end
 end

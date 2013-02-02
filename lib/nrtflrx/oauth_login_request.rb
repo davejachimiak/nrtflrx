@@ -1,16 +1,12 @@
 module Nrtflrx
   class OAuthLoginRequest
-    attr_reader :email, :password, :resource_path, :sub_domain, :params_source,
-                :oauth_token, :http_source
+    attr_reader :resource_path, :sub_domain, :params_source, :http_source
 
-    def initialize email, password, oauth_token
-      @email         = email
-      @password      = password
-      @oauth_token   = oauth_token
+    def initialize email, password, request_token
       @resource_path = '/oauth/login'
       @sub_domain    = 'api-user'
       @http_source   = lambda { |host, port| Net::HTTP.new host, port }
-      @params_source = Nrtflrx::OAuthLoginRequest::Params.new
+      @params_source = Nrtflrx::OAuthLoginRequest::Params.new email, password, request_token
     end
 
     def submit
@@ -31,17 +27,13 @@ module Nrtflrx
     end
 
     def params
-      params_source.as_hash.merge subscriber_auth_params
+      params_source.as_hash
     end
 
     private
 
     def host
       "#{sub_domain}.netflix.com"
-    end
-
-    def subscriber_auth_params
-      { name: email, password: password, oauth_token: oauth_token }
     end
   end
 end
