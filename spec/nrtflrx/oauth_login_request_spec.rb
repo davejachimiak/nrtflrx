@@ -32,8 +32,14 @@ describe Nrtflrx::OAuthLoginRequest do
   end
 
   describe '#submit' do
-    it 'calls request on the http object with the request object'
-    it 'returns the response body'
+    it 'returns the response body' do
+      response = OpenStruct.new(body: response_body = 'response_body')
+      @oauth_login_request.stubs(:http).returns OpenStruct.new(request: nil)
+      @oauth_login_request.stubs(:request).returns request = 'request'
+      @oauth_login_request.http.stubs(:request).with(request).returns response
+
+      @oauth_login_request.submit.must_equal response_body
+    end
   end
 
   describe '#http' do
