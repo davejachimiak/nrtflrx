@@ -3,10 +3,10 @@ module Nrtflrx
     attr_reader :email, :password, :resource_path, :sub_domain, :params_source,
                 :oauth_token
 
-    def initialize email, password, request_token
+    def initialize email, password, oauth_token
       @email         = email
       @password      = password
-      @oauth_token   = request_token.oauth_token
+      @oauth_token   = oauth_token
       @resource_path = '/oauth/login'
       @sub_domain    = 'api-user'
       @params_source = -> { Nrtflrx::OAuthLoginRequest::Params.new }

@@ -5,9 +5,9 @@ describe Nrtflrx::OAuthLoginRequest do
   before do
     @email               = 'email'
     @password            = 'password'
-    @request_token       = OpenStruct.new oauth_token: 'oauth token'
+    @oauth_token         = 'oauth token'
     @oauth_login_request = Nrtflrx::OAuthLoginRequest.
-      new @email, @password, @request_token
+      new @email, @password, @oauth_token
   end
 
   describe 'initialize' do
@@ -19,8 +19,8 @@ describe Nrtflrx::OAuthLoginRequest do
       @oauth_login_request.password.must_equal @password
     end
 
-    it 'sets the request token passed in' do
-      @oauth_login_request.oauth_token.must_equal @request_token.oauth_token
+    it 'sets the oauth token passed in' do
+      @oauth_login_request.oauth_token.must_equal @oauth_token
     end
 
     it 'sets the resource path' do
@@ -62,7 +62,7 @@ describe Nrtflrx::OAuthLoginRequest do
       @oauth_login_request.params.must_equal({
         name:        @email,
         password:    @password,
-        oauth_token: @request_token.oauth_token
+        oauth_token: @oauth_token
       })
     end
   end
