@@ -5,7 +5,9 @@ describe Nrtflrx::OAuthLoginRequest do
   before do
     @email               = 'email'
     @password            = 'password'
-    @oauth_login_request = Nrtflrx::OAuthLoginRequest.new @email, @password
+    @request_token       = mock
+    @oauth_login_request = Nrtflrx::OAuthLoginRequest.
+      new @email, @password, @request_token
   end
 
   describe 'initialize' do
@@ -15,6 +17,10 @@ describe Nrtflrx::OAuthLoginRequest do
 
     it 'sets the password passed in' do
       @oauth_login_request.password.must_equal @password
+    end
+
+    it 'sets the request token passed in' do
+      @oauth_login_request.request_token.must_equal @request_token
     end
 
     it 'sets the resource path' do

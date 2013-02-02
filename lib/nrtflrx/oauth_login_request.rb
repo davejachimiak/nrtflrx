@@ -1,10 +1,12 @@
 module Nrtflrx
   class OAuthLoginRequest
-    attr_reader :email, :password, :resource_path, :sub_domain, :params_source
+    attr_reader :email, :password, :resource_path, :sub_domain, :params_source,
+                :request_token
 
     def initialize email, password, request_token
       @email         = email
       @password      = password
+      @request_token = request_token
       @resource_path = '/oauth/login'
       @sub_domain    = 'api-user'
       @params_source = -> { Nrtflrx::OAuthLoginRequest::Params.new }
