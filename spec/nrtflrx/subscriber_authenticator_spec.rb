@@ -19,7 +19,7 @@ describe Nrtflrx::SubscriberAuthenticator do
     end
 
     it 'sets an authenticator request object' do
-      request = Nrtflrx::Request.new('oauth/login', 'api-user')
+      request = mock
       Nrtflrx::Request.stubs(:new).with('oauth/login', 'api-user').
         returns request
 
