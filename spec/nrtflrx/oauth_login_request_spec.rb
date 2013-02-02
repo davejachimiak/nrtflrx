@@ -44,9 +44,23 @@ describe Nrtflrx::OAuthLoginRequest do
   end
 
   describe '#http' do
-    it "is a new http object based on the uri's host and port"
-    it 'sets use ssl to true'
-    it 'sets the verify mode to verify none'
+    it "is a new http object based on the request host and https port" do
+      @oauth_login_request.http.address.must_equal 'api-user.netflix.com'
+      @oauth_login_request.http.port.must_equal 443
+    end
+
+    it 'sets use ssl to true' do
+      Net::HTTP.any_instance.expects(:use_ssl=).with true
+
+      @oauth_login_request.http
+    end
+
+    it 'sets the verify mode to verify none' do
+      Net::HTTP.any_instance.expects(:verify_mode=).
+        with OpenSSL::SSL::VERIFY_NONE
+
+      @oauth_login_request.http
+    end
   end
 
   describe '#request' do
@@ -57,7 +71,7 @@ describe Nrtflrx::OAuthLoginRequest do
   describe '#params' do
     it 'gets the params as a hash' do
       params_source = OpenStruct.new(as_hash: {})
-      Nrtflrx::OAuthLoginRequest::Params.stubs(:new).returns params_source
+      @oauth_login_request.stubs(:params_source).returns params_source
 
       @oauth_login_request.params.must_equal({
         name:        @email,
