@@ -52,9 +52,17 @@ describe Nrtflrx::SubscriberAuthenticator do
           returns false
       end
 
-      it 'returns true' do
+      it 'returns false' do
         @subscriber_authenticator.authenticate.must_equal false
       end
+    end
+  end
+
+  describe '#submit_request' do
+    it 'submits the request' do
+      @subscriber_authenticator.request.expects(:submit)
+
+      @subscriber_authenticator.submit_request
     end
   end
 
