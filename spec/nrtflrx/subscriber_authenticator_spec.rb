@@ -68,7 +68,7 @@ describe Nrtflrx::SubscriberAuthenticator do
 
   describe '#success?' do
     it '' do
-      skip
+      skip 'waiting for completion of new Request object'
     end
   end
 end

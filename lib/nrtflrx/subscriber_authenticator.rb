@@ -16,5 +16,8 @@ module Nrtflrx
     def submit_request
       request.submit
     end
+
+    def success? response
+    end
   end
 end
