@@ -64,8 +64,21 @@ describe Nrtflrx::OAuthLoginRequest do
   end
 
   describe '#request' do
-    it 'instantiates a new Post object with the resource path passed in'
-    it 'sets the data form with the params'
+    before do
+      @oauth_login_request.stubs(:params).returns @params = {}
+    end
+
+    it 'instantiates a new Post object with the resource path passed in' do
+      @oauth_login_request.request.path.
+        must_equal @oauth_login_request.resource_path
+    end
+
+    it 'sets the data form with the params' do
+      Net::HTTP::Post.any_instance.expects(:set_form_data).
+        with @params
+
+      @oauth_login_request.request
+    end
   end
 
   describe '#params' do
