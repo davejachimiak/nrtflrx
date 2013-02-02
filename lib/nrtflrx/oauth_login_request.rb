@@ -1,12 +1,12 @@
 module Nrtflrx
   class OAuthLoginRequest
     attr_reader :email, :password, :resource_path, :sub_domain, :params_source,
-                :request_token
+                :oauth_token
 
     def initialize email, password, request_token
       @email         = email
       @password      = password
-      @request_token = request_token
+      @oauth_token   = request_token.oauth_token
       @resource_path = '/oauth/login'
       @sub_domain    = 'api-user'
       @params_source = -> { Nrtflrx::OAuthLoginRequest::Params.new }
@@ -20,7 +20,13 @@ module Nrtflrx
     end
 
     def params
-      params_source.call.as_hash.merge({name: email, password: password})
+      params_source.call.as_hash.merge subscriber_auth_params
+    end
+
+    private
+
+    def subscriber_auth_params
+      { name: email, password: password, oauth_token: oauth_token }
     end
   end
 end
