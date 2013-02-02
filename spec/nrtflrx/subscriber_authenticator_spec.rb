@@ -10,18 +10,9 @@ describe Nrtflrx::SubscriberAuthenticator do
   end
 
   describe '#initialize' do
-    it 'sets the passed in email' do
-      @subscriber_authenticator.email.must_equal @email
-    end
-
-    it 'sets the passed in password' do
-      @subscriber_authenticator.password.must_equal @password
-    end
-
     it 'sets an authenticator request object' do
-      request = mock
-      Nrtflrx::Request.stubs(:new).with('oauth/login', 'api-user').
-        returns request
+      Nrtflrx::OAuthLoginRequest.stubs(:new).with(@email, @password).
+        returns request = mock
 
       subscriber_authenticator = Nrtflrx::SubscriberAuthenticator.
         new @email, @password
@@ -68,7 +59,7 @@ describe Nrtflrx::SubscriberAuthenticator do
 
   describe '#success?' do
     it '' do
-      skip 'waiting for completion of new Request object'
+      skip 'waiting for completion of OAuth Login Request object'
     end
   end
 end

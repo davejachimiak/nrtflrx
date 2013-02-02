@@ -8,9 +8,9 @@ module Nrtflrx
   require 'nrtflrx'
   require 'nrtflrx/queue'
   require 'nrtflrx/request'
-  require 'nrtflrx/oauth_login'
   require 'nrtflrx/request_token'
   require 'nrtflrx/request/params'
+  require 'nrtflrx/oauth_login_request'
   require 'nrtflrx/subscriber_authenticator'
   require 'nrtflrx/request/params/oauth_signature'
 
