@@ -10,15 +10,15 @@ module Nrtflrx
       @params_source = -> { Nrtflrx::OAuthLoginRequest::Params.new }
     end
 
-    def params
-      params_source.call.as_hash.merge({name: email, password: password})
-    end
-
     def submit
       http.request(request).body
     end
 
     def http
+    end
+
+    def params
+      params_source.call.as_hash.merge({name: email, password: password})
     end
   end
 end

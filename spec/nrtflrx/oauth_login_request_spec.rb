@@ -26,11 +26,6 @@ describe Nrtflrx::OAuthLoginRequest do
     end
   end
 
-  describe '#request' do
-    it 'instantiates a new Post object with the resource path passed in'
-    it 'sets the data form with the params'
-  end
-
   describe '#submit' do
     it 'returns the response body' do
       response = OpenStruct.new(body: response_body = 'response_body')
@@ -40,6 +35,11 @@ describe Nrtflrx::OAuthLoginRequest do
 
       @oauth_login_request.submit.must_equal response_body
     end
+  end
+
+  describe '#request' do
+    it 'instantiates a new Post object with the resource path passed in'
+    it 'sets the data form with the params'
   end
 
   describe '#http' do
