@@ -2,19 +2,19 @@ require_relative '../../spec_helper'
 require_relative '../../../lib/nrtflrx'
 
 describe Nrtflrx::OAuthLoginRequest::Params do
-  describe '#initialize' do
-    before do
-      Nrtflrx.consumer_key = @consumer_key = 'consumer key'
-      @email    = 'email'
-      @password = 'password'
-      request_token = OpenStruct.new(
-        oauth_token:      @oauth_token      = 'ot',
-        application_name: @application_name = 'an'
-      )
-      @params   = Nrtflrx::OAuthLoginRequest::Params.
-        new @email, @password, request_token
-    end
+  before do
+    Nrtflrx.consumer_key = @consumer_key = 'consumer key'
+    @email    = 'email'
+    @password = 'password'
+    request_token = OpenStruct.new(
+      oauth_token:      @oauth_token      = 'ot',
+      application_name: @application_name = 'an'
+    )
+    @params = Nrtflrx::OAuthLoginRequest::Params.
+      new @email, @password, request_token
+  end
 
+  describe '#initialize' do
     it 'sets name to the email passed in' do
       @params.instance_variable_get(:@name).must_equal @email
     end
@@ -39,6 +39,21 @@ describe Nrtflrx::OAuthLoginRequest::Params do
     it 'sets consumer key' do
       @params.instance_variable_get(:@oauth_consumer_key).
         must_equal @consumer_key
+    end
+  end
+
+  describe '#as_hash' do
+    it 'returns a hash of the instance variable names and values' do
+      params_hash = {
+        name:     @email,
+        password: @password,
+        oauth_token: @oauth_token,
+        application_name: @application_name,
+        accept_tos: true,
+        oauth_consumer_key: @consumer_key
+      }
+
+      @params.as_hash.must_equal params_hash
     end
   end
 end
