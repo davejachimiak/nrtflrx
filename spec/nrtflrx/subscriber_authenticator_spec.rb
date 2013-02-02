@@ -5,7 +5,7 @@ describe Nrtflrx::SubscriberAuthenticator do
   before do
     @email                    = 'email'
     @password                 = 'password'
-    @oauth_token              = 'oauth token'
+    @request_token            = mock
     @subscriber_authenticator = Nrtflrx::SubscriberAuthenticator.
       new @email, @password, @oauth_token
   end
@@ -13,11 +13,11 @@ describe Nrtflrx::SubscriberAuthenticator do
   describe '#initialize' do
     it 'sets an authenticator request object' do
       Nrtflrx::OAuthLoginRequest.stubs(:new).
-        with(@email, @password, @oauth_token).
+        with(@email, @password, @request_token).
         returns request = mock
 
       subscriber_authenticator = Nrtflrx::SubscriberAuthenticator.
-        new @email, @password, @oauth_token
+        new @email, @password, @request_token
 
       subscriber_authenticator.request.must_equal request
     end
