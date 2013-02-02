@@ -18,4 +18,16 @@ describe Nrtflrx::SubscriberAuthenticator do
       @subscriber_authenticator.password.must_equal @password
     end
   end
+
+  describe '#authenticate' do
+    describe 'success' do
+      before do
+        @subscriber_authenticator.stubs(:success?).returns true
+      end
+
+      it 'returns true' do
+        @subscriber_authenticator.authenticate.must_equal true
+      end
+    end
+  end
 end

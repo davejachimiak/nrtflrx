@@ -19,11 +19,11 @@ module Nrtflrx
   end
 
   def self.instant_catalog
-    Nrtflrx::Request.new('catalog/titles/streaming').submit
+    Nrtflrx::SignedRequest.new('catalog/titles/streaming').submit
   end
 
   def self.request_token
-    Nrtflrx::Request.new('oauth/request_token').submit
+    Nrtflrx::SignedRequest.new('oauth/request_token').submit
   end
 
   class BadConsumerKeyError < StandardError; end

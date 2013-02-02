@@ -5,55 +5,24 @@ require_relative '../spec_helper'
 
 require 'ostruct'
 
-describe Nrtflrx::Request do
+describe Nrtflrx::SignedRequest do
   before do
-    @request = Nrtflrx::Request.new('clown_sauce')
+    @request = Nrtflrx::SignedRequest.new('clown_sauce')
   end
 
   describe '#initialize' do
-    describe '@resource_path' do
-      it 'instantiates the resource_path with clown_sauce' do
-        resource_path_ivar = @request.instance_variable_get(:@resource_path)
+    describe '#resource_path' do
+      it 'is an attr_reader' do
+        resource_path = @request.resource_path
 
-        resource_path_ivar.must_equal 'clown_sauce'
-      end
-
-      it 'instantiates the resource_path with great' do
-        request            = Nrtflrx::Request.new('great')
-        resource_path_ivar = request.instance_variable_get(:@resource_path)
-
-        resource_path_ivar.must_equal 'great'
+        resource_path.must_equal 'clown_sauce'
       end
     end
 
-    describe '@sub_domain' do
-      it "defaults to 'api-public'" do
-        sub_domain_ivar = @request.instance_variable_get :@sub_domain
-
-        sub_domain_ivar.must_equal 'api-public'
+    describe '#sub_domain' do
+      it 'is an attr_reader' do
+        @request.sub_domain.must_equal 'api-public'
       end
-
-      it 'is set to the sub_domain passed in' do
-        request = Nrtflrx::Request.new('', 'poofington')
-
-        sub_domain_ivar = request.instance_variable_get :@sub_domain
-
-        sub_domain_ivar.must_equal 'poofington'
-      end
-    end
-  end
-
-  describe '#resource_path' do
-    it 'is an attr_reader' do
-      resource_path = @request.resource_path
-
-      resource_path.must_equal 'clown_sauce'
-    end
-  end
-
-  describe '#sub_domain' do
-    it 'is an attr_reader' do
-      @request.sub_domain.must_equal 'api-public'
     end
   end
 
@@ -94,7 +63,7 @@ describe Nrtflrx::Request do
       before do
         @bad_consumer_key_response = Net::HTTPForbidden.new('','','')
         @bad_consumer_key_response.stubs(:body).
-          returns Nrtflrx::Request::BAD_CONSUMER_KEY_RESPONSE
+          returns Nrtflrx::SignedRequest::BAD_CONSUMER_KEY_RESPONSE
       end
 
       it 'throws BadConsumerKeyError' do
@@ -152,7 +121,7 @@ describe Nrtflrx::Request do
 
     describe 'with an over-riding sub-domain' do
       it 'returns the base path with the over-riding sub-domain and resource path' do
-        request = Nrtflrx::Request.new('poof_boss', 'poofington')
+        request = Nrtflrx::SignedRequest.new('poof_boss', 'poofington')
 
         base_path = request.base_path
 
