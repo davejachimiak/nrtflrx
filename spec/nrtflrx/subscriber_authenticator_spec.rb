@@ -17,17 +17,50 @@ describe Nrtflrx::SubscriberAuthenticator do
     it 'sets the passed in password' do
       @subscriber_authenticator.password.must_equal @password
     end
+
+    it 'sets an authenticator request object' do
+      request = Nrtflrx::Request.new('oauth/login', 'api-user')
+      Nrtflrx::Request.stubs(:new).with('oauth/login', 'api-user').
+        returns request
+
+      subscriber_authenticator = Nrtflrx::SubscriberAuthenticator.
+        new @email, @password
+
+      subscriber_authenticator.request.must_equal request
+    end
   end
 
   describe '#authenticate' do
+    before do
+      @subscriber_authenticator.stubs(:submit_request).returns 'response'
+    end
+
     describe 'success' do
       before do
-        @subscriber_authenticator.stubs(:success?).returns true
+        @subscriber_authenticator.stubs(:success?).with('response').
+          returns true
       end
 
       it 'returns true' do
         @subscriber_authenticator.authenticate.must_equal true
       end
+    end
+
+    describe 'failure' do
+      before do
+        @subscriber_authenticator.stubs(:success?).with('response').
+          returns false
+      end
+
+      it 'returns true' do
+        @subscriber_authenticator.authenticate.must_equal false
+      end
+    end
+  end
+
+  describe '#success?' do
+    it '' do
+      skip
     end
   end
 end
