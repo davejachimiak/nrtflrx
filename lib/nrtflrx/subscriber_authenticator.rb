@@ -2,8 +2,8 @@ module Nrtflrx
   class SubscriberAuthenticator
     attr_reader :request
 
-    def initialize email, password
-      @request = Nrtflrx::OAuthLoginRequest.new email, password
+    def initialize email, password, request_token
+      @request = Nrtflrx::OAuthLoginRequest.new email, password, request_token
     end
 
     def authenticate
